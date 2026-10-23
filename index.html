@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Official Recruitment Portal</title>
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Vazirmatn (Persian/Arabic) & Inter (Latin/Cyrillic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
-      // فعال‌سازی خودکار دارک‌مود بر اساس تنظیمات سیستم کاربر (prefers-color-scheme)
       darkMode: 'media',
       theme: {
         extend: {
@@ -130,22 +127,10 @@
       <!-- Header with Uploaded Logo -->
       <header class="px-6 sm:px-10 pt-8 sm:pt-10 pb-6 border-b border-slate-100 dark:border-slate-800 text-center bg-gradient-to-b from-slate-50/70 to-white dark:from-slate-800/40 dark:to-slate-900">
         <div class="inline-flex flex-col items-center justify-center mb-4">
-          <!-- Primary Logo: Checks local ./logo.png first, then Wikimedia official IRIB SVG, with inline SVG fallback -->
           <div class="w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center p-2.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-100 dark:border-slate-700/80 shadow-sm">
-            <img
-              id="org-logo"
-              src="./logo.png"
-              alt="صدا و سیمای جمهوری اسلامی ایران"
-              class="max-w-full max-h-full object-contain dark:invert"
-              onerror="handleLogoError(this)"
-            />
-            <!-- Inline Vector Fallback if both local file and external SVG are unreachable -->
-            <svg id="org-logo-fallback" class="hidden w-24 h-24 text-slate-900 dark:text-white" viewBox="0 0 240 240" fill="currentColor">
-              <!-- Stylized Emblem & Interlocking Kufic Geometry of IRIB -->
-              <path d="M120 14c-6 0-11 4-14 8 5 2 8 6 8 11v48c0 4 3 7 6 7s6-3 6-7V33c0-5 3-9 8-11-3-4-8-8-14-8zm-18 14c-19 10-30 30-26 51 3 15 13 28 28 34-9-11-13-25-11-40 2-17 11-32 23-41-5-2-9-3-14-4zm36 0c-5 1-9 2-14 4 12 9 21 24 23 41 2 15-2 29-11 40 15-6 25-19 28-34 4-21-7-41-26-51zm-18 3c-14 11-21 28-18 46 2 11 9 20 18 26 9-6 16-15 18-26 3-18-4-35-18-46z"/>
-              <path d="M78 96L42 132H18c-6 0-10 4-10 10s4 10 10 10h24l36 36 42-42 42 42 36-36h24c6 0 10-4 10-10s-4-10-10-10h-24l-36-36-42 42-42-42zm0 22l20 20-20 20-20-20 20-20zm84 0l20 20-20 20-20-20 20-20zm-42 32l22 22-22 22-22-22 22-22z"/>
-              <text x="120" y="226" text-anchor="middle" font-family="Vazirmatn, sans-serif" font-weight="700" font-size="16">صدا و سیمای جمهوری اسلامی ایران</text>
-            </svg>
+            <a href="https://ibb.co/8DPmWKJL" class="w-full h-full flex items-center justify-center">
+              <img src="https://i.ibb.co/XZFWh29r/IRIB-Logo-svg.png" alt="IRIB-Logo-svg" border="0" class="max-w-full max-h-full object-contain dark:brightness-0 dark:invert transition-all duration-200">
+            </a>
           </div>
         </div>
 
@@ -520,21 +505,10 @@
   <footer class="w-full py-6 text-center text-xs text-slate-400 dark:text-slate-500">
     <p id="t-footer">سامانه جذب و استخدام • تمامی حقوق محفوظ است</p>
   </footer>
-
-  <!-- ===================================================================== -->
-  <!-- APPLICATION LOGIC & CONFIGURATION                                     -->
-  <!-- ===================================================================== -->
   <script>
-    /*************************************************************************
-     * ۱. آدرس Web App مربوط به Google Apps Script
-     * کافی است لینک Web App اسکریپت خود را در متغیر زیر قرار دهید.
-     * (تنظیمات فیلدهای ارسالی به تلگرام مستقیماً از طریق ربات تلگرام کنترل می‌شود)
-     *************************************************************************/
+
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW2hcGarYM1N8uqsRBZkzJ_PAiofyCA6F8_neHckWcmDE6n6gu8dPk38gcH7JT0fcG_Q/exec";
 
-    /*************************************************************************
-     * ۲. مدیریت لوگو (پشتیبانی از فایل لوکال، ویکی‌مدیا و SVG داخلی)
-     *************************************************************************/
     function handleLogoError(imgEl) {
       if (!imgEl.dataset.triedWiki) {
         imgEl.dataset.triedWiki = "true";
@@ -546,9 +520,6 @@
       }
     }
 
-    /*************************************************************************
-     * ۳. دیکشنری ۲۰ زبانه (تغییر خودکار زبان بر اساس IP کاربر)
-     *************************************************************************/
     const I18N = {
       fa: {
         dir: "rtl",
@@ -1460,9 +1431,6 @@
     let uploadedFileData = null; // { name, mimeType, base64 }
     let detectedVisitorInfo = { ip: "", countryCode: "", countryName: "", city: "" };
 
-    /*************************************************************************
-     * ۵. مقداردهی اولیه تقویم شمسی و میلادی
-     *************************************************************************/
     function initJalaliDropdowns() {
       const daySel = document.getElementById("jalali-day");
       const yearSel = document.getElementById("jalali-year");
@@ -1476,7 +1444,6 @@
         daySel.appendChild(opt);
       }
 
-      // سال‌های ۱۳۲۰ تا ۱۳۸۸
       for (let y = 1388; y >= 1320; y--) {
         const opt = document.createElement("option");
         opt.value = String(y);
@@ -1523,9 +1490,6 @@
       document.getElementById("birthDateGregorian").dispatchEvent(event);
     }
 
-    /*************************************************************************
-     * ۶. اعمال زبان و جهت صفحه (RTL / LTR)
-     *************************************************************************/
     function applyLanguage(langCode) {
       const dict = I18N[langCode] || I18N.en;
       currentLang = I18N[langCode] ? langCode : "en";
@@ -1536,7 +1500,6 @@
 
       document.getElementById("lang-select").value = currentLang;
 
-      // تغییر خودکار تقویم به شمسی برای فارسی و میلادی برای سایر زبان‌ها
       setCalendarMode(currentLang === "fa");
 
       const mapText = {
@@ -1588,9 +1551,6 @@
       document.getElementById("experienceText").placeholder = dict.phExpText;
     }
 
-    /*************************************************************************
-     * ۷. تشخیص خودکار و بی‌صدا (Silent) موقعیت IP کاربر برای زبان و کشور
-     *************************************************************************/
     function mapCountryToLang(countryCode) {
       if (!countryCode) return "fa";
       const cc = countryCode.toUpperCase();
@@ -1665,7 +1625,6 @@
             }
           }
         } catch (err) {
-          // ادامه به سرویس بعدی در صورت عدم پاسخگویی
         }
       }
 
@@ -1673,9 +1632,6 @@
       applyLanguage(I18N[browserLang] ? browserLang : "fa");
     }
 
-    /*************************************************************************
-     * ۸. مدیریت بخش سابقه کار (فایل / متن / کارآموزی) و آپلود فایل
-     *************************************************************************/
     function initExperienceSection() {
       const radios = document.querySelectorAll('input[name="experienceMode"]');
       const panelFile = document.getElementById("exp-panel-file");
@@ -1776,9 +1732,6 @@
       }
     }
 
-    /*************************************************************************
-     * ۹. شمارنده تکمیل فرم (۰ تا ۱۰)
-     *************************************************************************/
     function updateCompletionCounter() {
       let count = 0;
       if (document.getElementById("fullName").value.trim()) count++;
@@ -1814,9 +1767,6 @@
       box.textContent = message;
     }
 
-    /*************************************************************************
-     * ۱۰. ارسال فرم به Google Apps Script
-     *************************************************************************/
     async function handleFormSubmit(e) {
       e.preventDefault();
       const dict = I18N[currentLang] || I18N.fa;
@@ -1915,20 +1865,15 @@
       }
     }
 
-    /*************************************************************************
-     * ۱۱. راه‌اندازی رویدادها در هنگام بارگذاری صفحه
-     *************************************************************************/
     window.addEventListener("DOMContentLoaded", () => {
       initJalaliDropdowns();
       initExperienceSection();
       detectUserIpAndLanguage();
 
-      // تغییر دستی زبان توسط کاربر
       document.getElementById("lang-select").addEventListener("change", (e) => {
         applyLanguage(e.target.value);
       });
 
-      // چک‌باکس «مشابه شماره تماس» برای واتساپ
       const phoneInput = document.getElementById("phone");
       const whatsappInput = document.getElementById("whatsapp");
       const samePhoneChk = document.getElementById("same-phone-chk");
@@ -1947,7 +1892,6 @@
         updateCompletionCounter();
       });
 
-      // بروزرسانی شمارنده پیشرفت برای تمام ورودی‌ها
       document.querySelectorAll("#recruitment-form input, #recruitment-form select, #recruitment-form textarea").forEach(el => {
         el.addEventListener("input", updateCompletionCounter);
         el.addEventListener("change", updateCompletionCounter);
