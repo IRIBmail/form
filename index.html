@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Official Cooperation Portal</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          fontFamily: {
+            vazir: ['Vazirmatn', 'Inter', 'sans-serif'],
+            inter: ['Inter', 'Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Vazirmatn', 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html[dir="ltr"] body {
+      font-family: 'Inter', 'Vazirmatn', sans-serif;
+    }
+
+    /* Smooth focus & minimal scrollbar */
+    .form-input {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .form-input:focus {
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      .form-input:focus {
+        box-shadow: 0 0 0 3px rgba(248, 250, 252, 0.12);
+      }
+    }
+
+    /* Custom subtle background pattern (Light & Dark) */
+    .bg-grid-pattern {
+      background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg-grid-pattern {
+        background-image: radial-gradient(#1e293b 0.75px, transparent 0.75px);
+      }
+    }
+
+    /* Dragover state */
+    .file-drop-zone.dragover {
+      border-color: #0f172a;
+      background-color: #f1f5f9;
+    }
+    @media (prefers-color-scheme: dark) {
+      .file-drop-zone.dragover {
+        border-color: #f8fafc;
+        background-color: #1e293b;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 bg-grid-pattern flex flex-col justify-between selection:bg-slate-900 selection:text-white dark:selection:bg-white dark:selection:text-slate-900 transition-colors duration-200">
+
+  <!-- Top Utility Bar (Language Switcher Only - Minimal & Clean) -->
+  <div class="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 sticky top-0 z-30">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-end text-xs text-slate-600 dark:text-slate-300">
+      <!-- 20-Language Selector -->
+      <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+        <svg class="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <select id="lang-select" aria-label="Language" class="bg-transparent text-slate-800 dark:text-slate-100 font-semibold focus:outline-none cursor-pointer text-xs">
+          <option value="fa" class="bg-white dark:bg-slate-900">فارسی (FA)</option>
+          <option value="en" class="bg-white dark:bg-slate-900">English (EN)</option>
+          <option value="ar" class="bg-white dark:bg-slate-900">العربية (AR)</option>
+          <option value="tr" class="bg-white dark:bg-slate-900">Türkçe (TR)</option>
+          <option value="de" class="bg-white dark:bg-slate-900">Deutsch (DE)</option>
+          <option value="fr" class="bg-white dark:bg-slate-900">Français (FR)</option>
+          <option value="ru" class="bg-white dark:bg-slate-900">Русский (RU)</option>
+          <option value="es" class="bg-white dark:bg-slate-900">Español (ES)</option>
+          <option value="zh" class="bg-white dark:bg-slate-900">中文 (ZH)</option>
+          <option value="hi" class="bg-white dark:bg-slate-900">हिन्दी (HI)</option>
+          <option value="ur" class="bg-white dark:bg-slate-900">اردو (UR)</option>
+          <option value="pt" class="bg-white dark:bg-slate-900">Português (PT)</option>
+          <option value="it" class="bg-white dark:bg-slate-900">Italiano (IT)</option>
+          <option value="ja" class="bg-white dark:bg-slate-900">日本語 (JA)</option>
+          <option value="ko" class="bg-white dark:bg-slate-900">한국어 (KO)</option>
+          <option value="nl" class="bg-white dark:bg-slate-900">Nederlands (NL)</option>
+          <option value="pl" class="bg-white dark:bg-slate-900">Polski (PL)</option>
+          <option value="id" class="bg-white dark:bg-slate-900">Bahasa Indonesia (ID)</option>
+          <option value="az" class="bg-white dark:bg-slate-900">Azərbaycan (AZ)</option>
+          <option value="ku" class="bg-white dark:bg-slate-900">کوردی (KU)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="flex-grow w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <!-- Main Card -->
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200/90 dark:border-slate-800 overflow-hidden transition-colors">
+
+      <!-- Header with Uploaded Logo -->
+      <header class="px-6 sm:px-10 pt-8 sm:pt-10 pb-6 border-b border-slate-100 dark:border-slate-800 text-center bg-gradient-to-b from-slate-50/70 to-white dark:from-slate-800/40 dark:to-slate-900">
+        <div class="inline-flex flex-col items-center justify-center mb-4">
+          <div class="w-28 h-28 sm:w-32 sm:h-32 flex items-center justify-center p-2.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-100 dark:border-slate-700/80 shadow-sm">
+            <a href="https://ibb.co/8DPmWKJL" class="w-full h-full flex items-center justify-center">
+              <img src="https://i.ibb.co/XZFWh29r/IRIB-Logo-svg.png" alt="IRIB-Logo-svg" border="0" class="max-w-full max-h-full object-contain dark:brightness-0 dark:invert transition-all duration-200">
+            </a>
+          </div>
+        </div>
+
+        <h1 id="t-title" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+          فرم رسمی درخواست همکاری
+        </h1>
+        <p id="t-subtitle" class="mt-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-lg mx-auto leading-relaxed">
+          لطفاً تمامی اطلاعات درخواستی را با دقت و مطابق با مدارک هویتی خود تکمیل نمایید.
+        </p>
+      </header>
+
+      <!-- Progress / Stepper Bar -->
+      <div class="bg-slate-50 dark:bg-slate-800/60 px-6 sm:px-10 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span id="t-required-note">* تکمیل تمامی بخش‌های ستاره‌دار الزامی است</span>
+        <span id="form-completion-badge" class="font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">0 / 10</span>
+      </div>
+
+      <!-- Recruitment Form -->
+      <form id="recruitment-form" class="p-6 sm:p-10 space-y-8" novalidate>
+
+        <!-- Section 1: Personal Identity (Fields 1, 2, 3, 9) -->
+        <section class="space-y-5">
+          <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold flex items-center justify-center">1</span>
+            <h2 id="t-sec-personal" class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100">اطلاعات فردی و هویتی</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- 1. Full Name -->
+            <div class="sm:col-span-2">
+              <label for="fullName" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-fullname">۱. نام و نام‌خانوادگی</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                required
+                autocomplete="name"
+                placeholder="مثال: علی محمدی"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+
+            <!-- 2. Gender -->
+            <div>
+              <label for="gender" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-gender">۲. جنسیت</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                required
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              >
+                <option value="" id="t-opt-gender-placeholder" class="bg-white dark:bg-slate-900">انتخاب کنید...</option>
+                <option value="مرد / Male" id="t-opt-male" class="bg-white dark:bg-slate-900">مرد (Male)</option>
+                <option value="زن / Female" id="t-opt-female" class="bg-white dark:bg-slate-900">زن (Female)</option>
+              </select>
+            </div>
+
+            <!-- 3. Date of Birth -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="birthDate" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span id="t-lbl-dob">۳. تاریخ تولد</span>
+                  <span class="text-rose-500">*</span>
+                </label>
+                <!-- Toggle between Jalali text/select & Gregorian date picker -->
+                <button type="button" id="toggle-calendar-btn" class="text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">
+                  تغییر تقویم (شمسی/میلادی)
+                </button>
+              </div>
+
+              <!-- Jalali Input Mode (Default for FA) -->
+              <div id="dob-jalali-box" class="grid grid-cols-3 gap-2">
+                <select id="jalali-day" aria-label="روز" class="form-input rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-2.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none">
+                  <option value="" class="bg-white dark:bg-slate-900">روز</option>
+                </select>
+                <select id="jalali-month" aria-label="ماه" class="form-input rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-2.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none">
+                  <option value="" class="bg-white dark:bg-slate-900">ماه</option>
+                  <option value="01" class="bg-white dark:bg-slate-900">فروردین</option>
+                  <option value="02" class="bg-white dark:bg-slate-900">اردیبهشت</option>
+                  <option value="03" class="bg-white dark:bg-slate-900">خرداد</option>
+                  <option value="04" class="bg-white dark:bg-slate-900">تیر</option>
+                  <option value="05" class="bg-white dark:bg-slate-900">مرداد</option>
+                  <option value="06" class="bg-white dark:bg-slate-900">شهریور</option>
+                  <option value="07" class="bg-white dark:bg-slate-900">مهر</option>
+                  <option value="08" class="bg-white dark:bg-slate-900">آبان</option>
+                  <option value="09" class="bg-white dark:bg-slate-900">آذر</option>
+                  <option value="10" class="bg-white dark:bg-slate-900">دی</option>
+                  <option value="11" class="bg-white dark:bg-slate-900">بهمن</option>
+                  <option value="12" class="bg-white dark:bg-slate-900">اسفند</option>
+                </select>
+                <select id="jalali-year" aria-label="سال" class="form-input rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-2.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none">
+                  <option value="" class="bg-white dark:bg-slate-900">سال</option>
+                </select>
+              </div>
+
+              <!-- Gregorian Date Input Mode (Default for non-FA) -->
+              <input
+                type="date"
+                id="birthDateGregorian"
+                class="hidden form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+              <!-- Unified hidden input holding final birthDate value -->
+              <input type="hidden" id="birthDate" name="birthDate" required />
+            </div>
+
+            <!-- 9. Passport Number -->
+            <div class="sm:col-span-2">
+              <label for="passportNumber" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-passport">۹. شماره پاسپورت</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="passportNumber"
+                name="passportNumber"
+                required
+                dir="ltr"
+                placeholder="Example: A12345678"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 uppercase tracking-wider placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Contact & Social Media (Fields 4, 5, 6, 7) -->
+        <section class="space-y-5">
+          <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold flex items-center justify-center">2</span>
+            <h2 id="t-sec-contact" class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100">اطلاعات تماس و فضای مجازی</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- 4. Phone Number -->
+            <div>
+              <label for="phone" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-phone">۴. شماره تماس</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                dir="ltr"
+                autocomplete="tel"
+                placeholder="+98 912 000 0000"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+
+            <!-- 5. Active WhatsApp Number -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="whatsapp" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span id="t-lbl-whatsapp">۵. شماره فعال در واتساپ</span>
+                  <span class="text-rose-500">*</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+                  <input type="checkbox" id="same-phone-chk" class="rounded border-slate-300 dark:border-slate-600 text-slate-900 focus:ring-slate-900" />
+                  <span id="t-same-phone">مشابه شماره تماس</span>
+                </label>
+              </div>
+              <input
+                type="tel"
+                id="whatsapp"
+                name="whatsapp"
+                required
+                dir="ltr"
+                placeholder="+98 912 000 0000"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+
+            <!-- 6. Email -->
+            <div class="sm:col-span-2">
+              <label for="email" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-email">۶. ایمیل</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                dir="ltr"
+                autocomplete="email"
+                placeholder="name@example.com"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+
+            <!-- 7. Social Media Pages -->
+            <div class="sm:col-span-2">
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="socialMedia" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span id="t-lbl-social">۷. صفحات مجازی (اینستاگرام، لینکدین، تلگرام، ایکس و...)</span>
+                  <span class="text-rose-500">*</span>
+                </label>
+              </div>
+              <textarea
+                id="socialMedia"
+                name="socialMedia"
+                rows="2"
+                required
+                placeholder="مثال: Instagram: @username | LinkedIn: linkedin.com/in/username | Telegram: @username"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Location (Field 8: Country & City) -->
+        <section class="space-y-5">
+          <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold flex items-center justify-center">3</span>
+            <h2 id="t-sec-location" class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100">۸. کشور و شهر محل سکونت</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Country -->
+            <div>
+              <label for="country" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-country">کشور محل سکونت</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                required
+                placeholder="مثال: ایران"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+
+            <!-- City -->
+            <div>
+              <label for="city" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                <span id="t-lbl-city">شهر محل سکونت</span>
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                required
+                placeholder="مثال: تهران"
+                class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Work Experience (Field 10 - Mandatory) -->
+        <section class="space-y-5">
+          <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold flex items-center justify-center">4</span>
+            <h2 class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100">
+              <span id="t-sec-experience">۱۰. سابقه کار و رزومه</span>
+              <span class="text-rose-500">*</span>
+            </h2>
+          </div>
+
+          <!-- 3-Way Selection Tabs / Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup">
+            <!-- Mode 1: Upload File -->
+            <label id="exp-card-file" class="exp-mode-card cursor-pointer rounded-xl border-2 border-slate-900 dark:border-slate-200 bg-slate-900/5 dark:bg-slate-800/60 p-3.5 flex items-start gap-3 transition">
+              <input type="radio" name="experienceMode" value="file" checked required class="mt-1 text-slate-900 focus:ring-slate-900" />
+              <div>
+                <div id="t-exp-mode-file" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">آپلود فایل رزومه</div>
+                <div id="t-exp-mode-file-sub" class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">PDF، Word یا تصویر</div>
+              </div>
+            </label>
+
+            <!-- Mode 2: Write Text -->
+            <label id="exp-card-text" class="exp-mode-card cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950/50 p-3.5 flex items-start gap-3 transition">
+              <input type="radio" name="experienceMode" value="text" required class="mt-1 text-slate-900 focus:ring-slate-900" />
+              <div>
+                <div id="t-exp-mode-text" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">نوشتن شرح سابقه کار</div>
+                <div id="t-exp-mode-text-sub" class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">تایپ مستقیم سوابق و مهارت‌ها</div>
+              </div>
+            </label>
+
+            <!-- Mode 3: Internship / No Experience -->
+            <label id="exp-card-intern" class="exp-mode-card cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950/50 p-3.5 flex items-start gap-3 transition">
+              <input type="radio" name="experienceMode" value="internship" required class="mt-1 text-slate-900 focus:ring-slate-900" />
+              <div>
+                <div id="t-exp-mode-intern" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">سابقه کاری ندارم</div>
+                <div id="t-exp-mode-intern-sub" class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">مایل به کارآموزی هستم</div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Dynamic Sub-Panel A: File Upload -->
+          <div id="exp-panel-file" class="space-y-3">
+            <div
+              id="file-drop-area"
+              class="file-drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 text-center hover:border-slate-500 dark:hover:border-slate-500 transition cursor-pointer bg-slate-50/60 dark:bg-slate-950/40"
+            >
+              <input
+                type="file"
+                id="resumeFile"
+                required
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                class="hidden"
+              />
+              <svg class="w-9 h-9 mx-auto text-slate-400 dark:text-slate-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              <p class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
+                <span id="t-file-prompt">برای انتخاب فایل رزومه کلیک کنید یا فایل را اینجا رها کنید</span>
+                <span class="text-rose-500">*</span>
+              </p>
+              <p id="t-file-hint" class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
+                فرمت‌های مجاز: PDF, DOCX, JPG, PNG (حداکثر ۵ مگابایت)
+              </p>
+              <div id="selected-file-badge" class="hidden mt-3 inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-3 py-1.5 rounded-lg">
+                <span id="selected-file-name" class="truncate max-w-[220px]"></span>
+                <button type="button" id="remove-file-btn" class="text-slate-300 dark:text-slate-600 hover:text-white dark:hover:text-slate-900 font-bold">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Sub-Panel B: Text Description -->
+          <div id="exp-panel-text" class="hidden">
+            <label for="experienceText" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <span id="t-lbl-exp-text">شرح سوابق شغلی، مهارت‌ها و تحصیلات مرتبط</span>
+              <span id="exp-text-asterisk" class="text-rose-500">*</span>
+            </label>
+            <textarea
+              id="experienceText"
+              name="experienceText"
+              rows="4"
+              placeholder="نام شرکت‌ها، سمت شغلی، مدت فعالیت و مهارت‌های کلیدی خود را بنویسید..."
+              class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
+            ></textarea>
+          </div>
+
+          <!-- Dynamic Sub-Panel C: Internship Banner -->
+          <div id="exp-panel-intern" class="hidden rounded-xl bg-slate-100/90 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 p-4 flex items-start gap-3">
+            <svg class="w-5 h-5 text-slate-700 dark:text-slate-300 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed" id="t-intern-note">
+              درخواست شما در رده «بدون سابقه کار و متقاضی دوره کارآموزی» ثبت خواهد شد. در صورت تمایل می‌توانید توضیحات تکمیلی را در کادر متن وارد کنید.
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Portfolio Upload (Field 11 - Optional) -->
+        <section class="space-y-5">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold flex items-center justify-center">5</span>
+              <h2 id="t-sec-portfolio" class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100">۱۱. آپلود نمونه‌کارها (اختیاری)</h2>
+            </div>
+            <span id="t-opt-badge" class="text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-md border border-slate-200/80 dark:border-slate-700">اختیاری</span>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              id="portfolio-drop-area"
+              class="file-drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 text-center hover:border-slate-500 dark:hover:border-slate-500 transition cursor-pointer bg-slate-50/60 dark:bg-slate-950/40"
+            >
+              <input
+                type="file"
+                id="portfolioFile"
+                accept=".pdf,.zip,.rar,.doc,.docx,.jpg,.jpeg,.png,.mp4,.mp3"
+                class="hidden"
+              />
+              <svg class="w-9 h-9 mx-auto text-slate-400 dark:text-slate-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              <p id="t-portfolio-prompt" class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
+                برای انتخاب فایل نمونه‌کار کلیک کنید یا فایل را اینجا رها کنید
+              </p>
+              <p id="t-portfolio-hint" class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
+                فرمت‌های مجاز: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (حداکثر ۵ مگابایت)
+              </p>
+              <div id="selected-portfolio-badge" class="hidden mt-3 inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-3 py-1.5 rounded-lg">
+                <span id="selected-portfolio-name" class="truncate max-w-[220px]"></span>
+                <button type="button" id="remove-portfolio-btn" class="text-slate-300 dark:text-slate-600 hover:text-white dark:hover:text-slate-900 font-bold">&times;</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Submit Button & Status Message -->
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div id="form-feedback" class="hidden mb-4 p-4 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 active:scale-[0.99] text-white dark:text-slate-900 font-semibold py-3.5 px-6 text-sm sm:text-base shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            <span id="t-submit-btn">ثبت نهایی و ارسال اطلاعات</span>
+            <svg id="submit-spinner" class="hidden w-5 h-5 animate-spin text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="w-full py-6 text-center text-xs text-slate-400 dark:text-slate-500">
+    <p id="t-footer">تمامی حقوق برای صدا و سیمای جمهوری اسلامی ایران محفوظ است</p>
+  </footer>
+  <script>
+
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW2hcGarYM1N8uqsRBZkzJ_PAiofyCA6F8_neHckWcmDE6n6gu8dPk38gcH7JT0fcG_Q/exec";
+
+    function handleLogoError(imgEl) {
+      if (!imgEl.dataset.triedWiki) {
+        imgEl.dataset.triedWiki = "true";
+        imgEl.src = "https://upload.wikimedia.org/wikipedia/commons/3/30/IRIB_Logo.svg";
+      } else {
+        imgEl.classList.add("hidden");
+        const fallback = document.getElementById("org-logo-fallback");
+        if (fallback) fallback.classList.remove("hidden");
+      }
+    }
+
+    const I18N = {
+      fa: {
+        dir: "rtl",
+        title: "فرم رسمی درخواست همکاری",
+        subtitle: "لطفاً تمامی اطلاعات درخواستی را با دقت و مطابق با مدارک هویتی خود تکمیل نمایید.",
+        requiredNote: "* تکمیل تمامی بخش‌های ستاره‌دار الزامی است",
+        secPersonal: "اطلاعات فردی و هویتی",
+        lblFullName: "۱. نام و نام‌خانوادگی",
+        phFullName: "مثال: علی محمدی",
+        lblGender: "۲. جنسیت",
+        optGenderPlaceholder: "انتخاب کنید...",
+        optMale: "مرد (Male)",
+        optFemale: "زن (Female)",
+        lblDob: "۳. تاریخ تولد",
+        toggleCal: "تغییر تقویم (شمسی/میلادی)",
+        lblPassport: "۹. شماره پاسپورت",
+        secContact: "اطلاعات تماس و فضای مجازی",
+        lblPhone: "۴. شماره تماس",
+        lblWhatsapp: "۵. شماره فعال در واتساپ",
+        samePhone: "مشابه شماره تماس",
+        lblEmail: "۶. ایمیل",
+        lblSocial: "۷. صفحات مجازی (اینستاگرام، لینکدین، تلگرام و...)",
+        phSocial: "مثال: Instagram: @username | LinkedIn: linkedin.com/in/username | Telegram: @username",
+        secLocation: "۸. کشور و شهر محل سکونت",
+        lblCountry: "کشور محل سکونت",
+        phCountry: "مثال: ایران",
+        lblCity: "شهر محل سکونت",
+        phCity: "مثال: تهران",
+        secExperience: "۱۰. سابقه کار و رزومه",
+        expModeFile: "آپلود فایل رزومه",
+        expModeFileSub: "PDF، Word یا تصویر",
+        expModeText: "نوشتن شرح سابقه کار",
+        expModeTextSub: "تایپ مستقیم سوابق و مهارت‌ها",
+        expModeIntern: "سابقه کاری ندارم",
+        expModeInternSub: "مایل به کارآموزی هستم",
+        filePrompt: "برای انتخاب فایل رزومه کلیک کنید یا فایل را اینجا رها کنید",
+        fileHint: "فرمت‌های مجاز: PDF, DOCX, JPG, PNG (حداکثر ۵ مگابایت)",
+        lblExpText: "شرح سوابق شغلی، مهارت‌ها و تحصیلات مرتبط",
+        phExpText: "نام شرکت‌ها، سمت شغلی، مدت فعالیت و مهارت‌های کلیدی خود را بنویسید...",
+        internNote: "درخواست شما در رده «بدون سابقه کار و متقاضی دوره کارآموزی» ثبت خواهد شد. در صورت تمایل می‌توانید توضیحات تکمیلی را در کادر متن وارد کنید.",
+        secPortfolio: "۱۱. آپلود نمونه‌کارها (اختیاری)",
+        optBadge: "اختیاری",
+        portfolioPrompt: "برای انتخاب فایل نمونه‌کار کلیک کنید یا فایل را اینجا رها کنید",
+        portfolioHint: "فرمت‌های مجاز: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (حداکثر ۵ مگابایت)",
+        submitBtn: "ثبت نهایی و ارسال اطلاعات",
+        submittingBtn: "در حال ارسال اطلاعات...",
+        footer: "تمامی حقوق برای صدا و سیمای جمهوری اسلامی ایران محفوظ است",
+        successMsg: "اطلاعات شما با موفقیت ثبت و ارسال شد. با تشکر از همراهی شما.",
+        errRequired: "لطفاً تمامی فیلدهای الزامی را تکمیل نمایید."
+      },
+      en: {
+        dir: "ltr",
+        title: "Official Cooperation Application Form",
+        subtitle: "Please complete all requested information accurately according to your official identification documents.",
+        requiredNote: "* All starred fields are mandatory",
+        secPersonal: "Personal & Identity Information",
+        lblFullName: "1. Full Name",
+        phFullName: "e.g., John Doe",
+        lblGender: "2. Gender",
+        optGenderPlaceholder: "Select gender...",
+        optMale: "Male",
+        optFemale: "Female",
+        lblDob: "3. Date of Birth",
+        toggleCal: "Switch Calendar (Gregorian/Jalali)",
+        lblPassport: "9. Passport Number",
+        secContact: "Contact & Social Media",
+        lblPhone: "4. Phone Number",
+        lblWhatsapp: "5. Active WhatsApp Number",
+        samePhone: "Same as phone",
+        lblEmail: "6. Email Address",
+        lblSocial: "7. Social Media Profiles (LinkedIn, Instagram, Telegram, etc.)",
+        phSocial: "e.g., LinkedIn: linkedin.com/in/username | Instagram: @username",
+        secLocation: "8. Country & City of Residence",
+        lblCountry: "Country of Residence",
+        phCountry: "e.g., United Kingdom",
+        lblCity: "City of Residence",
+        phCity: "e.g., London",
+        secExperience: "10. Work Experience & Resume",
+        expModeFile: "Upload Resume File",
+        expModeFileSub: "PDF, Word, or Image",
+        expModeText: "Write Work Experience",
+        expModeTextSub: "Type your history & skills",
+        expModeIntern: "No Work Experience",
+        expModeInternSub: "Interested in Internship",
+        filePrompt: "Click to upload your resume or drag & drop here",
+        fileHint: "Accepted formats: PDF, DOCX, JPG, PNG (Max 5MB)",
+        lblExpText: "Summary of Work Experience, Skills & Education",
+        phExpText: "List companies, roles, duration, and key professional skills...",
+        internNote: "Your application will be registered under 'No prior experience / Interested in Internship'. You may optionally add notes below.",
+        secPortfolio: "11. Upload Portfolio / Work Samples (Optional)",
+        optBadge: "Optional",
+        portfolioPrompt: "Click to upload your portfolio file or drag & drop here",
+        portfolioHint: "Accepted formats: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max 5MB)",
+        submitBtn: "Submit Application",
+        submittingBtn: "Submitting Application...",
+        footer: "All Rights Reserved by the Islamic Republic of Iran Broadcasting (IRIB)",
+        successMsg: "Your application has been successfully submitted. Thank you!",
+        errRequired: "Please fill out all mandatory fields."
+      },
+      ar: {
+        dir: "rtl",
+        title: "استمارة طلب التعاون الرسمية",
+        subtitle: "يرجى ملء جميع البيانات المطلوبة بدقة وفقاً للوثائق الرسمية الخاصة بك.",
+        requiredNote: "* جميع الحقول المشار إليها بنجمة إلزامية",
+        secPersonal: "المعلومات الشخصية والهوية",
+        lblFullName: "١. الاسم الكامل",
+        phFullName: "مثال: محمد العلي",
+        lblGender: "٢. الجنس",
+        optGenderPlaceholder: "اختر...",
+        optMale: "ذكر (Male)",
+        optFemale: "أنثى (Female)",
+        lblDob: "٣. تاريخ الميلاد",
+        toggleCal: "تغيير التقويم",
+        lblPassport: "٩. رقم جواز السفر",
+        secContact: "معلومات الاتصال ووسائل التواصل",
+        lblPhone: "٤. رقم الهاتف",
+        lblWhatsapp: "٥. رقم الواتساب الفعال",
+        samePhone: "نفس رقم الهاتف",
+        lblEmail: "٦. البريد الإلكتروني",
+        lblSocial: "٧. حسابات التواصل الاجتماعي",
+        phSocial: "Instagram / LinkedIn / Telegram...",
+        secLocation: "٨. بلد ومدينة الإقامة",
+        lblCountry: "بلد الإقامة",
+        phCountry: "مثال: العراق",
+        lblCity: "مدينة الإقامة",
+        phCity: "مثال: بغداد",
+        secExperience: "١٠. الخبرة العملية والسيرة الذاتية",
+        expModeFile: "تحميل ملف السيرة الذاتية",
+        expModeFileSub: "PDF أو Word أو صورة",
+        expModeText: "كتابة الخبرة العملية",
+        expModeTextSub: "اكتب خبراتك ومهاراتك",
+        expModeIntern: "لا توجد خبرة عملية",
+        expModeInternSub: "أرغب في التدريب المهني",
+        filePrompt: "انقر لاختيار ملف السيرة الذاتية أو اسحبه هنا",
+        fileHint: "الصيغ المسموحة: PDF, DOCX, JPG, PNG (الحد الأقصى 5 ميجابايت)",
+        lblExpText: "شرح الخبرات الوظيفية والمهارات",
+        phExpText: "اكتب أسماء الشركات والمسمى الوظيفي والمهارات...",
+        internNote: "سيتم تسجيل طلبك ضمن فئة 'بدون خبرة عملية / راغب في التدريب'.",
+        secPortfolio: "١١. تحميل نماذج الأعمال (اختياري)",
+        optBadge: "اختياري",
+        portfolioPrompt: "انقر لاختيار ملف نماذج الأعمال أو اسحبه هنا",
+        portfolioHint: "الصيغ المسموحة: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (الحد الأقصى 5 ميجابايت)",
+        submitBtn: "إرسال الطلب نهائياً",
+        submittingBtn: "جارٍ الإرسال...",
+        footer: "جميع الحقوق محفوظة لهيئة الإذاعة والتلفزيون في الجمهورية الإسلامية الإيرانية",
+        successMsg: "تم تسجيل وإرسال معلوماتك بنجاح.",
+        errRequired: "يرجى ملء جميع الحقول الإلزامية."
+      },
+      tr: {
+        dir: "ltr",
+        title: "Resmi İş Birliği Başvuru Formu",
+        subtitle: "Lütfen tüm bilgileri resmi kimlik belgelerinize uygun olarak eksiksiz doldurunuz.",
+        requiredNote: "* Yıldızlı alanların doldurulması zorunludur",
+        secPersonal: "Kişisel ve Kimlik Bilgileri",
+        lblFullName: "1. Ad ve Soyad",
+        phFullName: "Örn: Ahmet Yılmaz",
+        lblGender: "2. Cinsiyet",
+        optGenderPlaceholder: "Seçiniz...",
+        optMale: "Erkek",
+        optFemale: "Kadın",
+        lblDob: "3. Doğum Tarihi",
+        toggleCal: "Takvimi Değiştir",
+        lblPassport: "9. Pasaport Numarası",
+        secContact: "İletişim ve Sosyal Medya",
+        lblPhone: "4. Telefon Numarası",
+        lblWhatsapp: "5. Aktif WhatsApp Numarası",
+        samePhone: "Telefon ile aynı",
+        lblEmail: "6. E-posta Adresi",
+        lblSocial: "7. Sosyal Medya Hesapları",
+        phSocial: "Instagram, LinkedIn, Telegram...",
+        secLocation: "8. İkamet Edilen Ülke ve Şehir",
+        lblCountry: "Ülke",
+        phCountry: "Örn: Türkiye",
+        lblCity: "Şehir",
+        phCity: "Örn: İstanbul",
+        secExperience: "10. İş Deneyimi ve Özgeçmiş",
+        expModeFile: "Özgeçmiş (CV) Yükle",
+        expModeFileSub: "PDF, Word veya Görsel",
+        expModeText: "Deneyimi Metin Olarak Yaz",
+        expModeTextSub: "Geçmiş ve yeteneklerinizi yazın",
+        expModeIntern: "İş Deneyimim Yok",
+        expModeInternSub: "Staj yapmak istiyorum",
+        filePrompt: "Dosya seçmek için tıklayın veya buraya sürükleyin",
+        fileHint: "PDF, DOCX, JPG, PNG (Maks 5MB)",
+        lblExpText: "İş Deneyimi ve Yetenekler",
+        phExpText: "Çalıştığınız kurumlar, pozisyon ve yeteneklerinizi yazınız...",
+        internNote: "Başvurunuz 'Deneyimsiz / Stajyer Adayı' olarak kaydedilecektir.",
+        secPortfolio: "11. Portfolyo / İş Örnekleri Yükle (İsteğe Bağlı)",
+        optBadge: "İsteğe Bağlı",
+        portfolioPrompt: "Portfolyo dosyası seçmek için tıklayın veya buraya sürükleyin",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks 5MB)",
+        submitBtn: "Başvuruyu Gönder",
+        submittingBtn: "Gönderiliyor...",
+        footer: "Tüm Hakları İran İslam Cumhuriyeti Radyo ve Televizyon Kurumu'na (IRIB) Aittir",
+        successMsg: "Başvurunuz başarıyla kaydedildi. Teşekkür ederiz!",
+        errRequired: "Lütfen tüm zorunlu alanları doldurun."
+      },
+      de: {
+        dir: "ltr",
+        title: "Offizielles Kooperationsantragsformular",
+        subtitle: "Bitte füllen Sie alle erforderlichen Angaben sorgfältig gemäß Ihren Ausweisdokumenten aus.",
+        requiredNote: "* Alle markierten Felder sind Pflichtfelder",
+        secPersonal: "Persönliche Angaben",
+        lblFullName: "1. Vor- und Nachname",
+        phFullName: "z.B. Max Mustermann",
+        lblGender: "2. Geschlecht",
+        optGenderPlaceholder: "Bitte wählen...",
+        optMale: "Männlich",
+        optFemale: "Weiblich",
+        lblDob: "3. Geburtsdatum",
+        toggleCal: "Kalender wechseln",
+        lblPassport: "9. Reisepassnummer",
+        secContact: "Kontakt & Soziale Medien",
+        lblPhone: "4. Telefonnummer",
+        lblWhatsapp: "5. Aktive WhatsApp-Nummer",
+        samePhone: "Wie Telefonnummer",
+        lblEmail: "6. E-Mail-Adresse",
+        lblSocial: "7. Soziale Netzwerke (LinkedIn, Instagram, Telegram...)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. Wohnsitz (Land & Stadt)",
+        lblCountry: "Land",
+        phCountry: "z.B. Deutschland",
+        lblCity: "Stadt",
+        phCity: "z.B. Berlin",
+        secExperience: "10. Berufserfahrung & Lebenslauf",
+        expModeFile: "Lebenslauf hochladen",
+        expModeFileSub: "PDF, Word oder Bild",
+        expModeText: "Erfahrung als Text eingeben",
+        expModeTextSub: "Berufserfahrung direkt beschreiben",
+        expModeIntern: "Keine Berufserfahrung",
+        expModeInternSub: "Interesse an einem Praktikum",
+        filePrompt: "Klicken Sie hier oder ziehen Sie Ihre Datei hierher",
+        fileHint: "PDF, DOCX, JPG, PNG (Max. 5MB)",
+        lblExpText: "Beschreibung der Berufserfahrung und Fähigkeiten",
+        phExpText: "Unternehmen, Positionen und Fähigkeiten...",
+        internNote: "Ihre Bewerbung wird als 'Keine Erfahrung / Praktikumsinteressiert' registriert.",
+        secPortfolio: "11. Portfolio / Arbeitsproben hochladen (Optional)",
+        optBadge: "Optional",
+        portfolioPrompt: "Klicken Sie hier, um Ihr Portfolio hochzuladen, oder ziehen Sie es hierher",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max. 5MB)",
+        submitBtn: "Bewerbung absenden",
+        submittingBtn: "Wird gesendet...",
+        footer: "Alle Rechte vorbehalten für den Rundfunk der Islamischen Republik Iran (IRIB)",
+        successMsg: "Ihre Bewerbung wurde erfolgreich übermittelt.",
+        errRequired: "Bitte füllen Sie alle Pflichtfelder aus."
+      },
+      fr: {
+        dir: "ltr",
+        title: "Formulaire Officiel de Demande de Coopération",
+        subtitle: "Veuillez remplir toutes les informations demandées avec précision conformément à vos documents d'identité.",
+        requiredNote: "* Tous les champs marqués d'un astérisque sont obligatoires",
+        secPersonal: "Informations Personnelles",
+        lblFullName: "1. Nom et Prénom",
+        phFullName: "ex: Jean Dupont",
+        lblGender: "2. Genre",
+        optGenderPlaceholder: "Sélectionner...",
+        optMale: "Homme",
+        optFemale: "Femme",
+        lblDob: "3. Date de naissance",
+        toggleCal: "Changer de calendrier",
+        lblPassport: "9. Numéro de passeport",
+        secContact: "Contact et Réseaux Sociaux",
+        lblPhone: "4. Numéro de téléphone",
+        lblWhatsapp: "5. Numéro WhatsApp actif",
+        samePhone: "Identique au téléphone",
+        lblEmail: "6. Adresse e-mail",
+        lblSocial: "7. Réseaux sociaux",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. Pays et Ville de résidence",
+        lblCountry: "Pays",
+        phCountry: "ex: France",
+        lblCity: "Ville",
+        phCity: "ex: Paris",
+        secExperience: "10. Expérience Professionnelle",
+        expModeFile: "Téléverser un CV",
+        expModeFileSub: "PDF, Word ou Image",
+        expModeText: "Décrire l'expérience",
+        expModeTextSub: "Saisir votre parcours en texte",
+        expModeIntern: "Sans expérience",
+        expModeInternSub: "Intéressé(e) par un stage",
+        filePrompt: "Cliquez pour choisir un fichier ou glissez-le ici",
+        fileHint: "PDF, DOCX, JPG, PNG (Max 5 Mo)",
+        lblExpText: "Résumé des expériences et compétences",
+        phExpText: "Entreprises, postes occupés et compétences...",
+        internNote: "Votre candidature sera enregistrée sous 'Sans expérience / Demande de stage'.",
+        secPortfolio: "11. Téléverser un Portfolio / Exemples de travaux (Optionnel)",
+        optBadge: "Optionnel",
+        portfolioPrompt: "Cliquez pour choisir votre portfolio ou glissez-le ici",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max 5 Mo)",
+        submitBtn: "Envoyer la candidature",
+        submittingBtn: "Envoi en cours...",
+        footer: "Tous droits réservés à la Radio-Télévision de la République islamique d'Iran (IRIB)",
+        successMsg: "Votre candidature a été envoyée avec succès.",
+        errRequired: "Veuillez remplir tous les champs obligatoires."
+      },
+      ru: {
+        dir: "ltr",
+        title: "Официальная форма заявки на сотрудничество",
+        subtitle: "Пожалуйста, внимательно заполните все поля в соответствии с вашими документами.",
+        requiredNote: "* Все поля со звездочкой обязательны для заполнения",
+        secPersonal: "Личные данные",
+        lblFullName: "1. Имя и Фамилия",
+        phFullName: "Напр.: Иван Иванов",
+        lblGender: "2. Пол",
+        optGenderPlaceholder: "Выберите...",
+        optMale: "Мужской",
+        optFemale: "Женский",
+        lblDob: "3. Дата рождения",
+        toggleCal: "Сменить календарь",
+        lblPassport: "9. Номер паспорта",
+        secContact: "Контакты и соцсети",
+        lblPhone: "4. Номер телефона",
+        lblWhatsapp: "5. Активный номер WhatsApp",
+        samePhone: "Совпадает с телефоном",
+        lblEmail: "6. Электронная почта",
+        lblSocial: "7. Социальные сети",
+        phSocial: "Telegram, Instagram, LinkedIn...",
+        secLocation: "8. Страна и город проживания",
+        lblCountry: "Страна",
+        phCountry: "Напр.: Россия",
+        lblCity: "Город",
+        phCity: "Напр.: Москва",
+        secExperience: "10. Опыт работы и резюме",
+        expModeFile: "Загрузить файл резюме",
+        expModeFileSub: "PDF, Word или фото",
+        expModeText: "Описать опыт текстом",
+        expModeTextSub: "Напишите о своих навыках",
+        expModeIntern: "Нет опыта работы",
+        expModeInternSub: "Хочу пройти стажировку",
+        filePrompt: "Нажмите для выбора файла или перетащите его сюда",
+        fileHint: "PDF, DOCX, JPG, PNG (макс. 5 МБ)",
+        lblExpText: "Описание опыта работы и навыков",
+        phExpText: "Укажите места работы, должности и ключевые навыки...",
+        internNote: "Ваша заявка будет отмечена как 'Без опыта работы / Стажировка'.",
+        secPortfolio: "11. Загрузка портфолио / примеров работ (Необязательно)",
+        optBadge: "Необязательно",
+        portfolioPrompt: "Нажмите для выбора файла портфолио или перетащите его сюда",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (макс. 5 МБ)",
+        submitBtn: "Отправить анкету",
+        submittingBtn: "Отправка...",
+        footer: "Все права защищены Телерадиовещанием Исламской Республики Иран (IRIB)",
+        successMsg: "Ваша анкета успешно отправлена!",
+        errRequired: "Пожалуйста, заполните все обязательные поля."
+      },
+      es: {
+        dir: "ltr",
+        title: "Formulario Oficial de Solicitud de Cooperación",
+        subtitle: "Complete toda la información solicitada con precisión según sus documentos de identidad.",
+        requiredNote: "* Todos los campos con asterisco son obligatorios",
+        secPersonal: "Información Personal",
+        lblFullName: "1. Nombre y Apellidos",
+        phFullName: "Ej.: Carlos García",
+        lblGender: "2. Género",
+        optGenderPlaceholder: "Seleccionar...",
+        optMale: "Masculino",
+        optFemale: "Femenino",
+        lblDob: "3. Fecha de nacimiento",
+        toggleCal: "Cambiar calendario",
+        lblPassport: "9. Número de pasaporte",
+        secContact: "Contacto y Redes Sociales",
+        lblPhone: "4. Número de teléfono",
+        lblWhatsapp: "5. Número activo de WhatsApp",
+        samePhone: "Igual que el teléfono",
+        lblEmail: "6. Correo electrónico",
+        lblSocial: "7. Redes Sociales",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. País y Ciudad de residencia",
+        lblCountry: "País",
+        phCountry: "Ej.: España",
+        lblCity: "Ciudad",
+        phCity: "Ej.: Madrid",
+        secExperience: "10. Experiencia Laboral y CV",
+        expModeFile: "Subir archivo de CV",
+        expModeFileSub: "PDF, Word o Imagen",
+        expModeText: "Escribir experiencia",
+        expModeTextSub: "Describa su historial en texto",
+        expModeIntern: "Sin experiencia laboral",
+        expModeInternSub: "Interesado en pasantía / prácticas",
+        filePrompt: "Haga clic para subir su CV o arrástrelo aquí",
+        fileHint: "PDF, DOCX, JPG, PNG (Máx. 5MB)",
+        lblExpText: "Resumen de experiencia laboral y habilidades",
+        phExpText: "Empresas, puestos desempeñados y habilidades...",
+        internNote: "Su solicitud se registrará como 'Sin experiencia / Interesado en prácticas'.",
+        secPortfolio: "11. Subir Portafolio / Muestras de Trabajo (Opcional)",
+        optBadge: "Opcional",
+        portfolioPrompt: "Haga clic para subir su portafolio o arrástrelo aquí",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Máx. 5MB)",
+        submitBtn: "Enviar Solicitud",
+        submittingBtn: "Enviando...",
+        footer: "Todos los derechos reservados para la Radiodifusión de la República Islámica de Irán (IRIB)",
+        successMsg: "Su solicitud ha sido enviada con éxito.",
+        errRequired: "Por favor complete todos los campos obligatorios."
+      },
+      zh: {
+        dir: "ltr",
+        title: "官方合作申请表",
+        subtitle: "请根据您的官方身份证件准确填写所有要求的信息。",
+        requiredNote: "* 所有带星号 (*) 的项目均为必填项",
+        secPersonal: "个人与身份信息",
+        lblFullName: "1. 姓名",
+        phFullName: "例如：张伟",
+        lblGender: "2. 性别",
+        optGenderPlaceholder: "请选择...",
+        optMale: "男 (Male)",
+        optFemale: "女 (Female)",
+        lblDob: "3. 出生日期",
+        toggleCal: "切换日历",
+        lblPassport: "9. 护照号码",
+        secContact: "联系方式与社交媒体",
+        lblPhone: "4. 电话号码",
+        lblWhatsapp: "5. 常用 WhatsApp 号码",
+        samePhone: "与电话号码相同",
+        lblEmail: "6. 电子邮箱",
+        lblSocial: "7. 社交媒体账号 (LinkedIn, Instagram, Telegram 等)",
+        phSocial: "例如：LinkedIn / Instagram / Telegram...",
+        secLocation: "8. 居住国家与城市",
+        lblCountry: "居住国家",
+        phCountry: "例如：中国",
+        lblCity: "居住城市",
+        phCity: "例如：北京",
+        secExperience: "10. 工作经验与简历",
+        expModeFile: "上传简历文件",
+        expModeFileSub: "PDF, Word 或图片",
+        expModeText: "填写工作经历",
+        expModeTextSub: "直接输入工作历史与技能",
+        expModeIntern: "无工作经验",
+        expModeInternSub: "希望申请实习岗位",
+        filePrompt: "点击选择简历文件或将文件拖放到此处",
+        fileHint: "支持格式：PDF, DOCX, JPG, PNG (最大 5MB)",
+        lblExpText: "工作经历、技能与教育背景概述",
+        phExpText: "请填写曾就职公司、职位、工作时间及核心技能...",
+        internNote: "您的申请将归类为“无工作经验 / 申请实习”。您也可以在下方补充说明。",
+        secPortfolio: "11. 上传作品集 / 作品样本（选填）",
+        optBadge: "选填",
+        portfolioPrompt: "点击选择作品集文件或将文件拖放到此处",
+        portfolioHint: "支持格式：PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (最大 5MB)",
+        submitBtn: "提交申请",
+        submittingBtn: "正在提交...",
+        footer: "伊朗伊斯兰共和国广播电视台 (IRIB) 版权所有",
+        successMsg: "您的申请已成功提交，谢谢！",
+        errRequired: "请填写所有必填字段。"
+      },
+      hi: {
+        dir: "ltr",
+        title: "आधिकारिक सहयोग आवेदन पत्र",
+        subtitle: "कृपया अपने आधिकारिक पहचान दस्तावेजों के अनुसार सभी मांगी गई जानकारी सटीक रूप से भरें।",
+        requiredNote: "* तारांकित (*) सभी फ़ील्ड अनिवार्य हैं",
+        secPersonal: "व्यक्तिगत और पहचान जानकारी",
+        lblFullName: "1. पूरा नाम",
+        phFullName: "उदा.: राहुल शर्मा",
+        lblGender: "2. लिंग",
+        optGenderPlaceholder: "चुनें...",
+        optMale: "पुरुष (Male)",
+        optFemale: "महिला (Female)",
+        lblDob: "3. जन्म तिथि",
+        toggleCal: "कैलेंडर बदलें",
+        lblPassport: "9. पासपोर्ट नंबर",
+        secContact: "संपर्क और सोशल मीडिया",
+        lblPhone: "4. फ़ोन नंबर",
+        lblWhatsapp: "5. सक्रिय WhatsApp नंबर",
+        samePhone: "फ़ोन नंबर के समान",
+        lblEmail: "6. ईमेल पता",
+        lblSocial: "7. सोशल मीडिया प्रोफ़ाइल",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. निवास का देश और शहर",
+        lblCountry: "देश",
+        phCountry: "उदा.: भारत",
+        lblCity: "शहर",
+        phCity: "उदा.: नई दिल्ली",
+        secExperience: "10. कार्य अनुभव और बायोडाटा (CV)",
+        expModeFile: "बायोडाटा (CV) अपलोड करें",
+        expModeFileSub: "PDF, Word या इमेज",
+        expModeText: "कार्य अनुभव लिखें",
+        expModeTextSub: "अपना अनुभव और कौशल टाइप करें",
+        expModeIntern: "कोई कार्य अनुभव नहीं",
+        expModeInternSub: "इंटर्नशिप में रुचि है",
+        filePrompt: "फ़ाइल चुनने के लिए क्लिक करें या यहाँ ड्रैग करें",
+        fileHint: "स्वीकृत प्रारूप: PDF, DOCX, JPG, PNG (अधिकतम 5MB)",
+        lblExpText: "कार्य अनुभव और कौशल का विवरण",
+        phExpText: "कंपनियों के नाम, पद और प्रमुख कौशल लिखें...",
+        internNote: "आपका आवेदन 'कोई अनुभव नहीं / इंटर्नशिप' श्रेणी में दर्ज किया जाएगा।",
+        secPortfolio: "11. पोर्टफोलियो / कार्य के नमूने अपलोड करें (वैकल्पिक)",
+        optBadge: "वैकल्पिक",
+        portfolioPrompt: "पोर्टफोलियो फ़ाइल चुनने के लिए क्लिक करें या यहाँ ड्रैग करें",
+        portfolioHint: "स्वीकृत प्रारूप: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (अधिकतम 5MB)",
+        submitBtn: "आवेदन जमा करें",
+        submittingBtn: "जमा किया जा रहा है...",
+        footer: "इस्लामिक रिपब्लिक ऑफ ईरान ब्रॉडकास्टिंग (IRIB) के पास सर्वाधिकार सुरक्षित हैं",
+        successMsg: "आपका आवेदन सफलतापूर्वक जमा कर दिया गया है। धन्यवाद!",
+        errRequired: "कृपया सभी अनिवार्य फ़ील्ड भरें।"
+      },
+      ur: {
+        dir: "rtl",
+        title: "تعاون کے لیے باضابطہ درخواست فارم",
+        subtitle: "براہ کرم اپنی شناختی دستاویزات کے مطابق تمام مطلوبہ معلومات درست طریقے سے پر کریں۔",
+        requiredNote: "* ستارے (*) والے تمام خانے لازمی ہیں",
+        secPersonal: "ذاتی اور شناختی معلومات",
+        lblFullName: "1. پورا نام",
+        phFullName: "مثال: علی خان",
+        lblGender: "2. جنس",
+        optGenderPlaceholder: "منتخب کریں...",
+        optMale: "مرد (Male)",
+        optFemale: "خاتون (Female)",
+        lblDob: "3. تاریخ پیدائش",
+        toggleCal: "کیلنڈر تبدیل کریں",
+        lblPassport: "9. پاسپورٹ نمبر",
+        secContact: "رابطہ اور سوشل میڈیا",
+        lblPhone: "4. فون نمبر",
+        lblWhatsapp: "5. فعال واٹس ایپ نمبر",
+        samePhone: "فون نمبر کے مطابق",
+        lblEmail: "6. ای میل ایڈریس",
+        lblSocial: "7. سوشل میڈیا اکاؤنٹس (LinkedIn, Instagram, Telegram)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. رہائش کا ملک اور شہر",
+        lblCountry: "ملک",
+        phCountry: "مثال: پاکستان",
+        lblCity: "شہر",
+        phCity: "مثال: اسلام آباد",
+        secExperience: "10. کام کا تجربہ اور سی وی (CV)",
+        expModeFile: "سی وی فائل اپ لوڈ کریں",
+        expModeFileSub: "PDF، Word یا تصویر",
+        expModeText: "کام کا تجربہ لکھیں",
+        expModeTextSub: "اپنی مہارت اور تجربہ ٹائپ کریں",
+        expModeIntern: "کوئی تجربہ نہیں ہے",
+        expModeInternSub: "انٹرن شپ میں دلچسپی ہے",
+        filePrompt: "سی وی اپ لوڈ کرنے کے لیے کلک کریں یا فائل یہاں ڈریگ کریں",
+        fileHint: "فائل فارمیٹس: PDF, DOCX, JPG, PNG (زیادہ سے زیادہ 5MB)",
+        lblExpText: "کام کے تجربے اور مہارتوں کی تفصیل",
+        phExpText: "کمپنیوں کے نام، عہدہ اور اپنی مہارتیں لکھیں...",
+        internNote: "آپ کی درخواست 'بغیر تجربہ / انٹرن شپ کے خواہشمند' کے طور پر درج کی جائے گی۔",
+        secPortfolio: "11. پورٹ فولیو / کام کے نمونے اپ لوڈ کریں (اختیاری)",
+        optBadge: "اختیاری",
+        portfolioPrompt: "پورٹ فولیو فائل اپ لوڈ کرنے کے لیے کلک کریں یا فائل یہاں ڈریگ کریں",
+        portfolioHint: "فائل فارمیٹس: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (زیادہ سے زیادہ 5MB)",
+        submitBtn: "درخواست جمع کریں",
+        submittingBtn: "جمع کیا جا رہا ہے...",
+        footer: "جملہ حقوق اسلامی جمہوریہ ایران کے نشریاتی ادارے (IRIB) کے لیے محفوظ ہیں",
+        successMsg: "آپ کی درخواست کامیابی کے ساتھ جمع ہو گئی ہے۔ شکریہ!",
+        errRequired: "براہ کرم تمام لازمی خانے پر کریں۔"
+      },
+      pt: {
+        dir: "ltr",
+        title: "Formulário Oficial de Solicitação de Cooperação",
+        subtitle: "Preencha todas as informações solicitadas com precisão de acordo com seus documentos oficiais.",
+        requiredNote: "* Todos os campos com asterisco são obrigatórios",
+        secPersonal: "Informações Pessoais e de Identificação",
+        lblFullName: "1. Nome Completo",
+        phFullName: "Ex.: João Silva",
+        lblGender: "2. Género",
+        optGenderPlaceholder: "Selecionar...",
+        optMale: "Masculino",
+        optFemale: "Feminino",
+        lblDob: "3. Data de Nascimento",
+        toggleCal: "Alternar calendário",
+        lblPassport: "9. Número do Passaporte",
+        secContact: "Contacto e Redes Sociais",
+        lblPhone: "4. Número de Telefone",
+        lblWhatsapp: "5. Número Ativo do WhatsApp",
+        samePhone: "Igual ao telefone",
+        lblEmail: "6. E-mail",
+        lblSocial: "7. Redes Sociais (LinkedIn, Instagram, Telegram...)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. País e Cidade de Residência",
+        lblCountry: "País",
+        phCountry: "Ex.: Brasil / Portugal",
+        lblCity: "Cidade",
+        phCity: "Ex.: São Paulo / Lisboa",
+        secExperience: "10. Experiência Profissional e Currículo",
+        expModeFile: "Enviar ficheiro de CV",
+        expModeFileSub: "PDF, Word ou Imagem",
+        expModeText: "Escrever experiência",
+        expModeTextSub: "Digite seu histórico e habilidades",
+        expModeIntern: "Sem experiência",
+        expModeInternSub: "Interessado em estágio",
+        filePrompt: "Clique para selecionar seu currículo ou arraste para cá",
+        fileHint: "PDF, DOCX, JPG, PNG (Máx. 5MB)",
+        lblExpText: "Resumo da Experiência Profissional e Competências",
+        phExpText: "Empresas, cargos e principais competências...",
+        internNote: "Sua candidatura será registada como 'Sem experiência / Candidato a Estágio'.",
+        secPortfolio: "11. Enviar Portfólio / Amostras de Trabalho (Opcional)",
+        optBadge: "Opcional",
+        portfolioPrompt: "Clique para selecionar seu portfólio ou arraste para cá",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Máx. 5MB)",
+        submitBtn: "Enviar Candidatura",
+        submittingBtn: "A enviar...",
+        footer: "Todos os direitos reservados à Radiodifusão da República Islâmica do Irã (IRIB)",
+        successMsg: "Sua candidatura foi enviada com sucesso!",
+        errRequired: "Por favor, preencha todos os campos obrigatórios."
+      },
+      it: {
+        dir: "ltr",
+        title: "Modulo Ufficiale di Richiesta di Collaborazione",
+        subtitle: "Si prega di compilare accuratamente tutte le informazioni richieste secondo i propri documenti d'identità.",
+        requiredNote: "* Tutti i campi contrassegnati da asterisco sono obbligatori",
+        secPersonal: "Dati Personali e di Identità",
+        lblFullName: "1. Nome e Cognome",
+        phFullName: "Es.: Marco Rossi",
+        lblGender: "2. Genere",
+        optGenderPlaceholder: "Seleziona...",
+        optMale: "Uomo",
+        optFemale: "Donna",
+        lblDob: "3. Data di nascita",
+        toggleCal: "Cambia calendario",
+        lblPassport: "9. Numero di passaporto",
+        secContact: "Contatti e Social Media",
+        lblPhone: "4. Numero di telefono",
+        lblWhatsapp: "5. Numero WhatsApp attivo",
+        samePhone: "Uguale al telefono",
+        lblEmail: "6. Indirizzo Email",
+        lblSocial: "7. Profili Social (LinkedIn, Instagram, Telegram...)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. Paese e Città di residenza",
+        lblCountry: "Paese",
+        phCountry: "Es.: Italia",
+        lblCity: "Città",
+        phCity: "Es.: Roma",
+        secExperience: "10. Esperienza Lavorativa e CV",
+        expModeFile: "Carica file CV",
+        expModeFileSub: "PDF, Word o Immagine",
+        expModeText: "Scrivi esperienza lavorativa",
+        expModeTextSub: "Descrivi il tuo percorso e competenze",
+        expModeIntern: "Nessuna esperienza",
+        expModeInternSub: "Interessato a uno stage / tirocinio",
+        filePrompt: "Clicca per caricare il CV o trascina il file qui",
+        fileHint: "PDF, DOCX, JPG, PNG (Max 5MB)",
+        lblExpText: "Riepilogo delle esperienze lavorative e competenze",
+        phExpText: "Aziende, ruoli ricoperti e competenze principali...",
+        internNote: "La candidatura verrà registrata come 'Senza esperienza / Richiesta di stage'.",
+        secPortfolio: "11. Carica Portfolio / Esempi di Lavoro (Opzionale)",
+        optBadge: "Opzionale",
+        portfolioPrompt: "Clicca per caricare il tuo portfolio o trascina il file qui",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max 5MB)",
+        submitBtn: "Invia Candidatura",
+        submittingBtn: "Invio in corso...",
+        footer: "Tutti i diritti riservati alla Radiotelevisione della Repubblica Islamica dell'Iran (IRIB)",
+        successMsg: "La tua candidatura è stata inviata con successo!",
+        errRequired: "Si prega di compilare tutti i campi obbligatori."
+      },
+      ja: {
+        dir: "ltr",
+        title: "公式協力申請フォーム",
+        subtitle: "本人確認書類に基づき、すべての必須項目を正確にご記入ください。",
+        requiredNote: "* アスタリスク（*）のついた項目はすべて必須です",
+        secPersonal: "個人情報・本人確認",
+        lblFullName: "1. 氏名（フルネーム）",
+        phFullName: "例：山田 太郎",
+        lblGender: "2. 性別",
+        optGenderPlaceholder: "選択してください...",
+        optMale: "男性 (Male)",
+        optFemale: "女性 (Female)",
+        lblDob: "3. 生年月日",
+        toggleCal: "カレンダー切替",
+        lblPassport: "9. パスポート番号",
+        secContact: "連絡先・SNSアカウント",
+        lblPhone: "4. 電話番号",
+        lblWhatsapp: "5. 利用可能なWhatsApp番号",
+        samePhone: "電話番号と同じ",
+        lblEmail: "6. メールアドレス",
+        lblSocial: "7. SNSアカウント（LinkedIn, Instagram, Telegram等）",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. 居住国・都市",
+        lblCountry: "居住国",
+        phCountry: "例：日本",
+        lblCity: "居住都市",
+        phCity: "例：東京",
+        secExperience: "10. 職務経歴・履歴書",
+        expModeFile: "履歴書ファイルをアップロード",
+        expModeFileSub: "PDF, Word, または画像",
+        expModeText: "職務経歴をテキストで入力",
+        expModeTextSub: "経歴やスキルを直接入力",
+        expModeIntern: "実務経験なし",
+        expModeInternSub: "インターンシップを希望",
+        filePrompt: "クリックしてファイルを選択、またはここにドラッグ＆ドロップ",
+        fileHint: "対応形式: PDF, DOCX, JPG, PNG (最大 5MB)",
+        lblExpText: "職務経歴・スキル・学歴の概要",
+        phExpText: "勤務先、役職、期間、主なスキルなどをご記入ください...",
+        internNote: "「実務経験なし／インターンシップ希望」として登録されます。",
+        secPortfolio: "11. ポートフォリオ・作品サンプルのアップロード（任意）",
+        optBadge: "任意",
+        portfolioPrompt: "クリックしてポートフォリオを選択、またはここにドラッグ＆ドロップ",
+        portfolioHint: "対応形式: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (最大 5MB)",
+        submitBtn: "応募内容を送信する",
+        submittingBtn: "送信中...",
+        footer: "イラン・イスラム共和国放送 (IRIB) がすべての権利を保有します",
+        successMsg: "応募情報が正常に送信されました。ありがとうございます。",
+        errRequired: "すべての必須項目をご記入ください。"
+      },
+      ko: {
+        dir: "ltr",
+        title: "공식 협력 신청서",
+        subtitle: "공식 신분증에 기재된 내용과 일치하도록 모든 요청 정보를 정확하게 작성해 주십시오.",
+        requiredNote: "* 별표(*) 표시된 모든 항목은 필수 입력 사항입니다",
+        secPersonal: "개인 및 신원 정보",
+        lblFullName: "1. 성명",
+        phFullName: "예: 홍길동",
+        lblGender: "2. 성별",
+        optGenderPlaceholder: "선택하세요...",
+        optMale: "남성 (Male)",
+        optFemale: "여성 (Female)",
+        lblDob: "3. 생년월일",
+        toggleCal: "달력 전환",
+        lblPassport: "9. 여권 번호",
+        secContact: "연락처 및 소셜 미디어",
+        lblPhone: "4. 전화번호",
+        lblWhatsapp: "5. 사용 중인 WhatsApp 번호",
+        samePhone: "전화번호와 동일",
+        lblEmail: "6. 이메일 주소",
+        lblSocial: "7. 소셜 미디어 계정 (LinkedIn, Instagram, Telegram 등)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. 거주 국가 및 도시",
+        lblCountry: "거주 국가",
+        phCountry: "예: 대한민국",
+        lblCity: "거주 도시",
+        phCity: "예: 서울",
+        secExperience: "10. 경력 사항 및 이력서",
+        expModeFile: "이력서 파일 업로드",
+        expModeFileSub: "PDF, Word 또는 이미지",
+        expModeText: "경력 사항 직접 작성",
+        expModeTextSub: "경력 및 보유 기술 텍스트 입력",
+        expModeIntern: "경력 없음",
+        expModeInternSub: "인턴십 지원 희망",
+        filePrompt: "클릭하여 이력서 파일을 선택하거나 이곳에 드래그하세요",
+        fileHint: "지원 형식: PDF, DOCX, JPG, PNG (최대 5MB)",
+        lblExpText: "경력 사항, 보유 기술 및 학력 요약",
+        phExpText: "근무했던 회사명, 직책, 기간 및 주요 기술을 작성해 주세요...",
+        internNote: "귀하의 지원서는 '경력 없음 / 인턴십 희망'으로 접수됩니다.",
+        secPortfolio: "11. 포트폴리오 / 작업 샘플 업로드 (선택 사항)",
+        optBadge: "선택 사항",
+        portfolioPrompt: "클릭하여 포트폴리오 파일을 선택하거나 이곳에 드래그하세요",
+        portfolioHint: "지원 형식: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (최대 5MB)",
+        submitBtn: "지원서 제출하기",
+        submittingBtn: "제출 중...",
+        footer: "모든 권리는 이란 이슬람 공화국 방송(IRIB)에 있습니다",
+        successMsg: "지원서가 성공적으로 제출되었습니다. 감사합니다!",
+        errRequired: "모든 필수 항목을 입력해 주세요."
+      },
+      nl: {
+        dir: "ltr",
+        title: "Officieel Samenwerkingsaanvraagformulier",
+        subtitle: "Vul alle gevraagde gegevens nauwkeurig in overeenkomstig uw officiële identiteitsdocumenten.",
+        requiredNote: "* Alle velden met een sterretje (*) zijn verplicht",
+        secPersonal: "Persoonlijke Gegevens",
+        lblFullName: "1. Volledige Naam",
+        phFullName: "Bijv.: Jan de Vries",
+        lblGender: "2. Geslacht",
+        optGenderPlaceholder: "Selecteer...",
+        optMale: "Man",
+        optFemale: "Vrouw",
+        lblDob: "3. Geboortedatum",
+        toggleCal: "Kalender wisselen",
+        lblPassport: "9. Paspoortnummer",
+        secContact: "Contact & Sociale Media",
+        lblPhone: "4. Telefoonnummer",
+        lblWhatsapp: "5. Actief WhatsApp-nummer",
+        samePhone: "Zelfde als telefoonnummer",
+        lblEmail: "6. E-mailadres",
+        lblSocial: "7. Sociale Media (LinkedIn, Instagram, Telegram...)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. Land en Stad van Verblijf",
+        lblCountry: "Land",
+        phCountry: "Bijv.: Nederland",
+        lblCity: "Stad",
+        phCity: "Bijv.: Amsterdam",
+        secExperience: "10. Werkervaring & CV",
+        expModeFile: "CV-bestand uploaden",
+        expModeFileSub: "PDF, Word of Afbeelding",
+        expModeText: "Werkervaring uitschrijven",
+        expModeTextSub: "Typ uw ervaring en vaardigheden",
+        expModeIntern: "Geen werkervaring",
+        expModeInternSub: "Geïnteresseerd in een stage",
+        filePrompt: "Klik om uw CV te kiezen of sleep het bestand hierheen",
+        fileHint: "PDF, DOCX, JPG, PNG (Max. 5MB)",
+        lblExpText: "Overzicht van werkervaring en vaardigheden",
+        phExpText: "Bedrijven, functies en belangrijkste vaardigheden...",
+        internNote: "Uw sollicitatie wordt geregistreerd als 'Geen ervaring / Stage-aanvraag'.",
+        secPortfolio: "11. Portfolio / Werkvoorbeelden uploaden (Optioneel)",
+        optBadge: "Optioneel",
+        portfolioPrompt: "Klik om uw portfolio te kiezen of sleep het bestand hierheen",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max. 5MB)",
+        submitBtn: "Sollicitatie Verzenden",
+        submittingBtn: "Bezig met verzenden...",
+        footer: "Alle rechten voorbehouden aan de Islamitische Republiek Iran Omroep (IRIB)",
+        successMsg: "Uw sollicitatie is succesvol verzonden!",
+        errRequired: "Vul alstublieft alle verplichte velden in."
+      },
+      pl: {
+        dir: "ltr",
+        title: "Oficjalny Formularz Zgłoszenia Współpracy",
+        subtitle: "Prosimy o dokładne wypełnienie wszystkich wymaganych informacji zgodnie z dokumentami tożsamości.",
+        requiredNote: "* Wszystkie pola oznaczone gwiazdką (*) są obowiązkowe",
+        secPersonal: "Dane Osobowe",
+        lblFullName: "1. Imię i Nazwisko",
+        phFullName: "Np.: Jan Kowalski",
+        lblGender: "2. Płeć",
+        optGenderPlaceholder: "Wybierz...",
+        optMale: "Mężczyzna",
+        optFemale: "Kobieta",
+        lblDob: "3. Data urodzenia",
+        toggleCal: "Zmień kalendarz",
+        lblPassport: "9. Numer paszportu",
+        secContact: "Kontakt i Media Społecznościowe",
+        lblPhone: "4. Numer telefonu",
+        lblWhatsapp: "5. Aktywny numer WhatsApp",
+        samePhone: "Taki sam jak telefon",
+        lblEmail: "6. Adres e-mail",
+        lblSocial: "7. Media społecznościowe (LinkedIn, Instagram, Telegram...)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. Kraj i Miasto zamieszkania",
+        lblCountry: "Kraj",
+        phCountry: "Np.: Polska",
+        lblCity: "Miasto",
+        phCity: "Np.: Warszawa",
+        secExperience: "10. Doświadczenie Zawodowe i CV",
+        expModeFile: "Prześlij plik CV",
+        expModeFileSub: "PDF, Word lub Obraz",
+        expModeText: "Opisz doświadczenie",
+        expModeTextSub: "Wpisz historię zatrudnienia i umiejętności",
+        expModeIntern: "Brak doświadczenia",
+        expModeInternSub: "Chcę odbyć staż / praktyki",
+        filePrompt: "Kliknij, aby wybrać plik CV lub przeciągnij go tutaj",
+        fileHint: "PDF, DOCX, JPG, PNG (Maks. 5MB)",
+        lblExpText: "Opis doświadczenia zawodowego i umiejętności",
+        phExpText: "Firmy, stanowiska oraz kluczowe umiejętności...",
+        internNote: "Twoje zgłoszenie zostanie zapisane jako 'Brak doświadczenia / Staż'.",
+        secPortfolio: "11. Prześlij Portfolio / Próbki Prac (Opcjonalnie)",
+        optBadge: "Opcjonalnie",
+        portfolioPrompt: "Kliknij, aby wybrać plik portfolio lub przeciągnij go tutaj",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks. 5MB)",
+        submitBtn: "Wyślij Aplikację",
+        submittingBtn: "Wysyłanie...",
+        footer: "Wszelkie prawa zastrzeżone dla Telewizji i Radia Islamskiej Republiki Iranu (IRIB)",
+        successMsg: "Twoja aplikacja została pomyślnie wysłana!",
+        errRequired: "Proszę wypełnić wszystkie wymagane pola."
+      },
+      id: {
+        dir: "ltr",
+        title: "Formulir Resmi Permohonan Kerja Sama",
+        subtitle: "Harap lengkapi semua informasi yang diminta secara akurat sesuai dengan dokumen identitas resmi Anda.",
+        requiredNote: "* Semua kolom bertanda bintang (*) wajib diisi",
+        secPersonal: "Informasi Pribadi & Identitas",
+        lblFullName: "1. Nama Lengkap",
+        phFullName: "Contoh: Budi Santoso",
+        lblGender: "2. Jenis Kelamin",
+        optGenderPlaceholder: "Pilih...",
+        optMale: "Laki-laki (Male)",
+        optFemale: "Perempuan (Female)",
+        lblDob: "3. Tanggal Lahir",
+        toggleCal: "Ganti Kalender",
+        lblPassport: "9. Nomor Paspor",
+        secContact: "Kontak & Media Sosial",
+        lblPhone: "4. Nomor Telepon",
+        lblWhatsapp: "5. Nomor WhatsApp Aktif",
+        samePhone: "Sama dengan nomor telepon",
+        lblEmail: "6. Alamat Email",
+        lblSocial: "7. Akun Media Sosial (LinkedIn, Instagram, Telegram, dll.)",
+        phSocial: "LinkedIn, Instagram, Telegram...",
+        secLocation: "8. Negara & Kota Tempat Tinggal",
+        lblCountry: "Negara",
+        phCountry: "Contoh: Indonesia",
+        lblCity: "Kota",
+        phCity: "Contoh: Jakarta",
+        secExperience: "10. Pengalaman Kerja & CV",
+        expModeFile: "Unggah File CV",
+        expModeFileSub: "PDF, Word, atau Gambar",
+        expModeText: "Tulis Pengalaman Kerja",
+        expModeTextSub: "Ketik riwayat kerja & keahlian",
+        expModeIntern: "Belum Ada Pengalaman",
+        expModeInternSub: "Tertarik mengikuti program magang",
+        filePrompt: "Klik untuk memilih file CV atau seret ke sini",
+        fileHint: "Format: PDF, DOCX, JPG, PNG (Maks 5MB)",
+        lblExpText: "Ringkasan Pengalaman Kerja & Keahlian",
+        phExpText: "Sebutkan nama perusahaan, posisi, durasi, dan keahlian...",
+        internNote: "Lamaran Anda akan didaftarkan dalam kategori 'Tanpa Pengalaman / Peminat Magang'.",
+        secPortfolio: "11. Unggah Portofolio / Contoh Karya (Opsional)",
+        optBadge: "Opsional",
+        portfolioPrompt: "Klik untuk memilih file portofolio atau seret ke sini",
+        portfolioHint: "Format: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks 5MB)",
+        submitBtn: "Kirim Lamaran",
+        submittingBtn: "Mengirim...",
+        footer: "Hak Cipta Dilindungi Undang-Undang untuk Lembaga Penyiaran Republik Islam Iran (IRIB)",
+        successMsg: "Lamaran Anda telah berhasil dikirim. Terima kasih!",
+        errRequired: "Harap lengkapi semua kolom yang wajib diisi."
+      },
+      az: {
+        dir: "ltr",
+        title: "Rəsmi Əməkdaşlıq Müraciət Forması",
+        subtitle: "Zəhmət olmasa bütün tələb olunan məlumatları rəsmi şəxsiyyət sənədlərinizə uyğun olaraq dəqiq doldurun.",
+        requiredNote: "* Ulduzlu (*) bütün xanaların doldurulması məcburidir",
+        secPersonal: "Şəxsi və Kimlik Məlumatları",
+        lblFullName: "1. Ad və Soyad",
+        phFullName: "Məs.: Əli Məmmədov",
+        lblGender: "2. Cins",
+        optGenderPlaceholder: "Seçin...",
+        optMale: "Kişi (Male)",
+        optFemale: "Qadın (Female)",
+        lblDob: "3. Doğum Tarixi",
+        toggleCal: "Təqvimi dəyişdir",
+        lblPassport: "9. Pasport Nömrəsi",
+        secContact: "Əlaqə və Sosial Şəbəkələr",
+        lblPhone: "4. Telefon Nömrəsi",
+        lblWhatsapp: "5. Aktiv WhatsApp Nömrəsi",
+        samePhone: "Telefon nömrəsi ilə eyni",
+        lblEmail: "6. E-poçt Ünvanı",
+        lblSocial: "7. Sosial Şəbəkə Hesabları (Instagram, LinkedIn, Telegram...)",
+        phSocial: "Instagram, LinkedIn, Telegram...",
+        secLocation: "8. Yaşadığınız Ölkə və Şəhər",
+        lblCountry: "Ölkə",
+        phCountry: "Məs.: Azərbaycan",
+        lblCity: "Şəhər",
+        phCity: "Məs.: Bakı",
+        secExperience: "10. İş Təcrübəsi və CV",
+        expModeFile: "CV Faylını Yüklə",
+        expModeFileSub: "PDF, Word və ya Şəkil",
+        expModeText: "İş Təcrübəsini Yaz",
+        expModeTextSub: "Təcrübə və bacarıqlarınızı qeyd edin",
+        expModeIntern: "İş Təcrübəm Yoxdur",
+        expModeInternSub: "Təcrübəçi (staj) olmaq istəyirəm",
+        filePrompt: "CV faylını seçmək üçün klikləyin və ya bura sürükləyin",
+        fileHint: "PDF, DOCX, JPG, PNG (Maks 5MB)",
+        lblExpText: "İş Təcrübəsi və Bacarıqların Təsviri",
+        phExpText: "İşlədiyiniz şirkətlər, vəzifə və əsas bacarıqlarınız...",
+        internNote: "Müraciətiniz 'Təcrübəsiz / Təcrübə Proqramı (Staj)' kimi qeydə alınacaq.",
+        secPortfolio: "11. Portfolio / İş Nümunələrini Yüklə (İstəyə bağlı)",
+        optBadge: "İstəyə bağlı",
+        portfolioPrompt: "Portfolio faylını seçmək üçün klikləyin və ya bura sürükləyin",
+        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks 5MB)",
+        submitBtn: "Müraciəti Göndər",
+        submittingBtn: "Göndərilir...",
+        footer: "Bütün hüquqlar İran İslam Respublikasının Radio və Televiziya Təşkilatına (IRIB) məxsusdur",
+        successMsg: "Müraciətiniz uğurla qeydə alındı və göndərildi!",
+        errRequired: "Zəhmət olmasa bütün məcburi xanaları doldurun."
+      },
+      ku: {
+        dir: "rtl",
+        title: "فۆڕمی فەرمی داواکاری هاوکاری",
+        subtitle: "تکایە هەموو زانیارییە داواکراوەکان بە وردی و بەپێی بەڵگەنامە فەرمییەکانت پڕبکەرەوە.",
+        requiredNote: "* پڕکردنەوەی هەموو بەشە ئەستێرەدارەکان (*) ناچارییە",
+        secPersonal: "زانیاری کەسی و ناسنامە",
+        lblFullName: "١. ناوی تەواو",
+        phFullName: "نموونە: ئارام محەمەد",
+        lblGender: "٢. ڕەگەز",
+        optGenderPlaceholder: "هەڵبژێرە...",
+        optMale: "نێر (Male)",
+        optFemale: "مێ (Female)",
+        lblDob: "٣. بەرواری لەدایکبوون",
+        toggleCal: "گۆڕینی ڕۆژژمێر",
+        lblPassport: "٩. ژمارەی پاسپۆرت",
+        secContact: "زانیاری پەیوەندی و تۆڕە کۆمەڵایەتییەکان",
+        lblPhone: "٤. ژمارەی تەلەفۆن",
+        lblWhatsapp: "٥. ژمارەی چالاکی واتسئەپ",
+        samePhone: "هاوشێوەی ژمارەی تەلەفۆن",
+        lblEmail: "٦. ئیمەیڵ",
+        lblSocial: "٧. پەڕەکانی تۆڕە کۆمەڵایەتییەکان",
+        phSocial: "Instagram, LinkedIn, Telegram...",
+        secLocation: "٨. وڵات و شاری نیشتەجێبوون",
+        lblCountry: "وڵات",
+        phCountry: "نموونە: عێراق / ئێران",
+        lblCity: "شار",
+        phCity: "نموونە: هەولێر / سلێمانی / سنە",
+        secExperience: "١٠. ئەزموونی کار و سیڤی (CV)",
+        expModeFile: "بارکردنی فایلی سیڤی",
+        expModeFileSub: "PDF، Word یان وێنە",
+        expModeText: "نووسینی ئەزموونی کار",
+        expModeTextSub: "ئەزموون و کارامەییەکانت بنووسە",
+        expModeIntern: "ئەزموونی کارم نییە",
+        expModeInternSub: "ئارەزووی ڕاهێنان (کارئامووزی) دەکەم",
+        filePrompt: "کرتە بکە بۆ هەڵبژاردنی فایلی سیڤی یان لێرە دایبنێ",
+        fileHint: "فۆرماتە ڕێپێدراوەکان: PDF, DOCX, JPG, PNG (زۆرترین ٥ مێگابایت)",
+        lblExpText: "کورتەی ئەزموونی کار و لێهاتووییەکان",
+        phExpText: "ناوی کۆمپانیاکان، ناونیشانی کار و کارامەییەکان بنووسە...",
+        internNote: "داواکارییەکەت لە بەشی «بێ ئەزموونی کار / خوازیاری خولی ڕاهێنان» تۆمار دەکرێت.",
+        secPortfolio: "١١. بارکردنی نموونەی کارەکان (ئارەزوومەندانە)",
+        optBadge: "ئارەزوومەندانە",
+        portfolioPrompt: "کرتە بکە بۆ هەڵبژاردنی فایلی نموونەکار یان لێرە دایبنێ",
+        portfolioHint: "فۆرماتە ڕێپێدراوەکان: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (زۆرترین ٥ مێگابایت)",
+        submitBtn: "تۆمارکردن و ناردنی زانیارییەکان",
+        submittingBtn: "لە حالەتی ناردندایە...",
+        footer: "هەموو مافێک بۆ ڕادیۆ و تەلەفزیۆنی کۆماری ئیسلامیی ئێران پارێزراوە",
+        successMsg: "زانیارییەکانت بە سەرکەوتوویی تۆمار و ڕەوانە کران. سوپاس!",
+        errRequired: "تکایە هەموو بەشە ناچارییەکان پڕبکەرەوە."
+      }
+    };
+
+    /*************************************************************************
+     * ۴. متغیرهای وضعیت برنامه
+     *************************************************************************/
+    let currentLang = "fa";
+    let isJalaliMode = true;
+    let uploadedFileData = null; // { name, mimeType, base64 }
+    let uploadedPortfolioData = null; // { name, mimeType, base64 }
+    let detectedVisitorInfo = { ip: "", countryCode: "", countryName: "", city: "" };
+
+    function initJalaliDropdowns() {
+      const daySel = document.getElementById("jalali-day");
+      const yearSel = document.getElementById("jalali-year");
+
+      for (let d = 1; d <= 31; d++) {
+        const opt = document.createElement("option");
+        const val = String(d).padStart(2, "0");
+        opt.value = val;
+        opt.textContent = d;
+        opt.className = "bg-white dark:bg-slate-900";
+        daySel.appendChild(opt);
+      }
+
+      for (let y = 1388; y >= 1320; y--) {
+        const opt = document.createElement("option");
+        opt.value = String(y);
+        opt.textContent = y;
+        opt.className = "bg-white dark:bg-slate-900";
+        yearSel.appendChild(opt);
+      }
+
+      const syncDate = () => {
+        const hiddenDob = document.getElementById("birthDate");
+        if (isJalaliMode) {
+          const y = yearSel.value;
+          const m = document.getElementById("jalali-month").value;
+          const d = daySel.value;
+          hiddenDob.value = (y && m && d) ? `${y}/${m}/${d}` : "";
+        } else {
+          hiddenDob.value = document.getElementById("birthDateGregorian").value || "";
+        }
+        updateCompletionCounter();
+      };
+
+      daySel.addEventListener("change", syncDate);
+      document.getElementById("jalali-month").addEventListener("change", syncDate);
+      yearSel.addEventListener("change", syncDate);
+      document.getElementById("birthDateGregorian").addEventListener("change", syncDate);
+
+      document.getElementById("toggle-calendar-btn").addEventListener("click", () => {
+        setCalendarMode(!isJalaliMode);
+      });
+    }
+
+    function setCalendarMode(useJalali) {
+      isJalaliMode = useJalali;
+      const jalaliBox = document.getElementById("dob-jalali-box");
+      const gregInput = document.getElementById("birthDateGregorian");
+      if (isJalaliMode) {
+        jalaliBox.classList.remove("hidden");
+        gregInput.classList.add("hidden");
+      } else {
+        jalaliBox.classList.add("hidden");
+        gregInput.classList.remove("hidden");
+      }
+      const event = new Event("change");
+      document.getElementById("birthDateGregorian").dispatchEvent(event);
+    }
+
+    function applyLanguage(langCode) {
+      const dict = I18N[langCode] || I18N.en;
+      currentLang = I18N[langCode] ? langCode : "en";
+
+      const htmlRoot = document.getElementById("html-root");
+      htmlRoot.setAttribute("lang", currentLang);
+      htmlRoot.setAttribute("dir", dict.dir);
+
+      document.getElementById("lang-select").value = currentLang;
+
+      setCalendarMode(currentLang === "fa");
+
+      const mapText = {
+        "t-title": dict.title,
+        "t-subtitle": dict.subtitle,
+        "t-required-note": dict.requiredNote,
+        "t-sec-personal": dict.secPersonal,
+        "t-lbl-fullname": dict.lblFullName,
+        "t-lbl-gender": dict.lblGender,
+        "t-opt-gender-placeholder": dict.optGenderPlaceholder,
+        "t-opt-male": dict.optMale,
+        "t-opt-female": dict.optFemale,
+        "t-lbl-dob": dict.lblDob,
+        "toggle-calendar-btn": dict.toggleCal,
+        "t-lbl-passport": dict.lblPassport,
+        "t-sec-contact": dict.secContact,
+        "t-lbl-phone": dict.lblPhone,
+        "t-lbl-whatsapp": dict.lblWhatsapp,
+        "t-same-phone": dict.samePhone,
+        "t-lbl-email": dict.lblEmail,
+        "t-lbl-social": dict.lblSocial,
+        "t-sec-location": dict.secLocation,
+        "t-lbl-country": dict.lblCountry,
+        "t-lbl-city": dict.lblCity,
+        "t-sec-experience": dict.secExperience,
+        "t-exp-mode-file": dict.expModeFile,
+        "t-exp-mode-file-sub": dict.expModeFileSub,
+        "t-exp-mode-text": dict.expModeText,
+        "t-exp-mode-text-sub": dict.expModeTextSub,
+        "t-exp-mode-intern": dict.expModeIntern,
+        "t-exp-mode-intern-sub": dict.expModeInternSub,
+        "t-file-prompt": dict.filePrompt,
+        "t-file-hint": dict.fileHint,
+        "t-lbl-exp-text": dict.lblExpText,
+        "t-intern-note": dict.internNote,
+        "t-sec-portfolio": dict.secPortfolio,
+        "t-opt-badge": dict.optBadge,
+        "t-portfolio-prompt": dict.portfolioPrompt,
+        "t-portfolio-hint": dict.portfolioHint,
+        "t-submit-btn": dict.submitBtn,
+        "t-footer": dict.footer
+      };
+
+      Object.entries(mapText).forEach(([id, txt]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      });
+
+      document.getElementById("fullName").placeholder = dict.phFullName;
+      document.getElementById("socialMedia").placeholder = dict.phSocial;
+      document.getElementById("country").placeholder = dict.phCountry;
+      document.getElementById("city").placeholder = dict.phCity;
+      document.getElementById("experienceText").placeholder = dict.phExpText;
+    }
+
+    function mapCountryToLang(countryCode) {
+      if (!countryCode) return "fa";
+      const cc = countryCode.toUpperCase();
+      if (["IR", "AF", "TJ"].includes(cc)) return "fa";
+      if (["SA", "AE", "IQ", "KW", "QA", "OM", "BH", "LB", "JO", "EG", "SY", "YE", "DZ", "MA", "TN", "LY", "SD", "PS"].includes(cc)) return "ar";
+      if (["TR", "CY"].includes(cc)) return "tr";
+      if (["AZ"].includes(cc)) return "az";
+      if (["DE", "AT", "LI", "CH"].includes(cc)) return "de";
+      if (["FR", "MC", "BE", "LU", "SN", "CI", "CM"].includes(cc)) return "fr";
+      if (["RU", "BY", "KZ", "KG", "UZ", "AM"].includes(cc)) return "ru";
+      if (["ES", "MX", "AR", "CO", "CL", "PE", "VE", "EC", "GT", "CU", "BO", "DO", "HN", "PY", "SV", "NI", "CR", "PA", "UY"].includes(cc)) return "es";
+      if (["CN", "TW", "HK", "SG"].includes(cc)) return "zh";
+      if (["IN"].includes(cc)) return "hi";
+      if (["PK"].includes(cc)) return "ur";
+      if (["PT", "BR", "AO", "MZ"].includes(cc)) return "pt";
+      if (["IT", "SM", "VA"].includes(cc)) return "it";
+      if (["JP"].includes(cc)) return "ja";
+      if (["KR"].includes(cc)) return "ko";
+      if (["NL", "SR"].includes(cc)) return "nl";
+      if (["PL"].includes(cc)) return "pl";
+      if (["ID", "MY"].includes(cc)) return "id";
+      return "en";
+    }
+
+    async function detectUserIpAndLanguage() {
+      const apis = [
+        {
+          url: "https://ipwho.is/",
+          parse: (d) => d && d.success !== false ? { ip: d.ip, code: d.country_code, country: d.country, city: d.city } : null
+        },
+        {
+          url: "https://ipapi.co/json/",
+          parse: (d) => d && d.country_code ? { ip: d.ip, code: d.country_code, country: d.country_name, city: d.city } : null
+        },
+        {
+          url: "https://api.country.is/",
+          parse: (d) => d && d.country ? { ip: d.ip, code: d.country, country: d.country, city: "" } : null
+        }
+      ];
+
+      for (const api of apis) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 3500);
+          const res = await fetch(api.url, { signal: controller.signal });
+          clearTimeout(timeoutId);
+
+          if (res.ok) {
+            const raw = await res.json();
+            const info = api.parse(raw);
+            if (info && info.code) {
+              detectedVisitorInfo = {
+                ip: info.ip || "",
+                countryCode: info.code,
+                countryName: info.country || info.code,
+                city: info.city || ""
+              };
+
+              const targetLang = mapCountryToLang(info.code);
+              applyLanguage(targetLang);
+
+              const countryInput = document.getElementById("country");
+              const cityInput = document.getElementById("city");
+              if (!countryInput.value && info.country) {
+                countryInput.value = info.code === "IR" && targetLang === "fa" ? "ایران" : info.country;
+              }
+              if (!cityInput.value && info.city) {
+                cityInput.value = info.city;
+              }
+              updateCompletionCounter();
+              return;
+            }
+          }
+        } catch (err) {
+        }
+      }
+
+      const browserLang = (navigator.language || "fa").slice(0, 2).toLowerCase();
+      applyLanguage(I18N[browserLang] ? browserLang : "fa");
+    }
+
+    function initExperienceSection() {
+      const radios = document.querySelectorAll('input[name="experienceMode"]');
+      const panelFile = document.getElementById("exp-panel-file");
+      const panelText = document.getElementById("exp-panel-text");
+      const panelIntern = document.getElementById("exp-panel-intern");
+      const resumeFileInput = document.getElementById("resumeFile");
+      const expTextInput = document.getElementById("experienceText");
+      const expTextAsterisk = document.getElementById("exp-text-asterisk");
+
+      const cardFile = document.getElementById("exp-card-file");
+      const cardText = document.getElementById("exp-card-text");
+      const cardIntern = document.getElementById("exp-card-intern");
+
+      function updateModeUI() {
+        const selected = document.querySelector('input[name="experienceMode"]:checked').value;
+
+        [cardFile, cardText, cardIntern].forEach(c => {
+          c.className = "exp-mode-card cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950/50 p-3.5 flex items-start gap-3 transition";
+        });
+
+        const activeCard = selected === "file" ? cardFile : selected === "text" ? cardText : cardIntern;
+        activeCard.className = "exp-mode-card cursor-pointer rounded-xl border-2 border-slate-900 dark:border-slate-200 bg-slate-900/5 dark:bg-slate-800/60 p-3.5 flex items-start gap-3 transition";
+
+        if (selected === "file") {
+          panelFile.classList.remove("hidden");
+          panelText.classList.add("hidden");
+          panelIntern.classList.add("hidden");
+          resumeFileInput.required = true;
+          expTextInput.required = false;
+        } else if (selected === "text") {
+          panelFile.classList.add("hidden");
+          panelText.classList.remove("hidden");
+          panelIntern.classList.add("hidden");
+          resumeFileInput.required = false;
+          expTextInput.required = true;
+          if (expTextAsterisk) expTextAsterisk.classList.remove("hidden");
+        } else {
+          panelFile.classList.add("hidden");
+          panelIntern.classList.remove("hidden");
+          panelText.classList.remove("hidden");
+          resumeFileInput.required = false;
+          expTextInput.required = false;
+          if (expTextAsterisk) expTextAsterisk.classList.add("hidden");
+        }
+        updateCompletionCounter();
+      }
+
+      radios.forEach(r => r.addEventListener("change", updateModeUI));
+
+      const dropArea = document.getElementById("file-drop-area");
+      const fileInput = document.getElementById("resumeFile");
+      const fileBadge = document.getElementById("selected-file-badge");
+      const fileNameSpan = document.getElementById("selected-file-name");
+      const removeFileBtn = document.getElementById("remove-file-btn");
+
+      dropArea.addEventListener("click", (e) => {
+        if (e.target !== removeFileBtn) fileInput.click();
+      });
+
+      dropArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropArea.classList.add("dragover");
+      });
+
+      dropArea.addEventListener("dragleave", () => {
+        dropArea.classList.remove("dragover");
+      });
+
+      dropArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropArea.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleSelectedFile(e.dataTransfer.files[0]);
+        }
+      });
+
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files && fileInput.files[0]) {
+          handleSelectedFile(fileInput.files[0]);
+        }
+      });
+
+      removeFileBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        uploadedFileData = null;
+        fileInput.value = "";
+        fileBadge.classList.add("hidden");
+        updateCompletionCounter();
+      });
+
+      function handleSelectedFile(file) {
+        if (file.size > 5 * 1024 * 1024) {
+          showFeedback("حجم فایل انتخاب شده نباید بیشتر از ۵ مگابایت باشد / Max file size is 5MB.", "error");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const base64Raw = evt.target.result.split(",")[1];
+          uploadedFileData = {
+            name: file.name,
+            mimeType: file.type || "application/octet-stream",
+            base64: base64Raw
+          };
+          fileNameSpan.textContent = file.name;
+          fileBadge.classList.remove("hidden");
+          updateCompletionCounter();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function initPortfolioSection() {
+      const dropArea = document.getElementById("portfolio-drop-area");
+      const fileInput = document.getElementById("portfolioFile");
+      const fileBadge = document.getElementById("selected-portfolio-badge");
+      const fileNameSpan = document.getElementById("selected-portfolio-name");
+      const removeFileBtn = document.getElementById("remove-portfolio-btn");
+
+      dropArea.addEventListener("click", (e) => {
+        if (e.target !== removeFileBtn) fileInput.click();
+      });
+
+      dropArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropArea.classList.add("dragover");
+      });
+
+      dropArea.addEventListener("dragleave", () => {
+        dropArea.classList.remove("dragover");
+      });
+
+      dropArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropArea.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleSelectedPortfolio(e.dataTransfer.files[0]);
+        }
+      });
+
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files && fileInput.files[0]) {
+          handleSelectedPortfolio(fileInput.files[0]);
+        }
+      });
+
+      removeFileBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        uploadedPortfolioData = null;
+        fileInput.value = "";
+        fileBadge.classList.add("hidden");
+      });
+
+      function handleSelectedPortfolio(file) {
+        if (file.size > 5 * 1024 * 1024) {
+          showFeedback("حجم فایل انتخاب شده نباید بیشتر از ۵ مگابایت باشد / Max file size is 5MB.", "error");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const base64Raw = evt.target.result.split(",")[1];
+          uploadedPortfolioData = {
+            name: file.name,
+            mimeType: file.type || "application/octet-stream",
+            base64: base64Raw
+          };
+          fileNameSpan.textContent = file.name;
+          fileBadge.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateCompletionCounter() {
+      let count = 0;
+      if (document.getElementById("fullName").value.trim()) count++;
+      if (document.getElementById("gender").value.trim()) count++;
+      if (document.getElementById("birthDate").value.trim()) count++;
+      if (document.getElementById("phone").value.trim()) count++;
+      if (document.getElementById("whatsapp").value.trim()) count++;
+      if (document.getElementById("email").value.trim()) count++;
+      if (document.getElementById("socialMedia").value.trim()) count++;
+      if (document.getElementById("country").value.trim() && document.getElementById("city").value.trim()) count++;
+      if (document.getElementById("passportNumber").value.trim()) count++;
+
+      const expMode = document.querySelector('input[name="experienceMode"]:checked')?.value;
+      if (expMode === "internship") {
+        count++;
+      } else if (expMode === "file" && uploadedFileData) {
+        count++;
+      } else if (expMode === "text" && document.getElementById("experienceText").value.trim()) {
+        count++;
+      }
+
+      document.getElementById("form-completion-badge").textContent = `${count} / 10`;
+    }
+
+    function showFeedback(message, type = "info") {
+      const box = document.getElementById("form-feedback");
+      box.className = "mb-4 p-4 rounded-xl text-xs sm:text-sm font-medium border";
+      if (type === "success") {
+        box.classList.add("bg-emerald-50", "dark:bg-emerald-950/50", "text-emerald-800", "dark:text-emerald-200", "border-emerald-200", "dark:border-emerald-800");
+      } else {
+        box.classList.add("bg-rose-50", "dark:bg-rose-950/50", "text-rose-800", "dark:text-rose-200", "border-rose-200", "dark:border-rose-800");
+      }
+      box.textContent = message;
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const dict = I18N[currentLang] || I18N.fa;
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const gender = document.getElementById("gender").value.trim();
+      const birthDate = document.getElementById("birthDate").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const whatsapp = document.getElementById("whatsapp").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const socialMedia = document.getElementById("socialMedia").value.trim();
+      const country = document.getElementById("country").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const passportNumber = document.getElementById("passportNumber").value.trim();
+      const expMode = document.querySelector('input[name="experienceMode"]:checked')?.value;
+      const expText = document.getElementById("experienceText").value.trim();
+
+      if (!fullName || !gender || !birthDate || !phone || !whatsapp || !email || !socialMedia || !country || !city || !passportNumber || !expMode) {
+        showFeedback(dict.errRequired, "error");
+        return;
+      }
+
+      if (expMode === "file" && !uploadedFileData) {
+        showFeedback(currentLang === "fa" ? "لطفاً فایل رزومه خود را انتخاب کنید یا گزینه نوشتن متن / کارآموزی را برگزینید." : "Please upload your resume file or select another experience option.", "error");
+        return;
+      }
+
+      if (expMode === "text" && !expText) {
+        showFeedback(currentLang === "fa" ? "لطفاً شرح سابقه کار خود را وارد نمایید." : "Please enter your work experience details.", "error");
+        return;
+      }
+
+      let experienceSummary = "";
+      if (expMode === "internship") {
+        experienceSummary = "سابقه کاری ندارم و مایل به کارآموزی هستم" + (expText ? ` (${expText})` : "");
+      } else if (expMode === "text") {
+        experienceSummary = expText;
+      } else {
+        experienceSummary = `فایل رزومه پیوست شد (${uploadedFileData.name})`;
+      }
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        visitorIp: detectedVisitorInfo.ip,
+        detectedLanguage: currentLang,
+        fields: {
+          fullName,
+          gender,
+          birthDate,
+          phone,
+          whatsapp,
+          email,
+          socialMedia,
+          country,
+          city,
+          location: `${country} - ${city}`,
+          passportNumber,
+          experienceMode: expMode,
+          experienceSummary,
+          portfolioSummary: uploadedPortfolioData ? `فایل نمونه‌کار پیوست شد (${uploadedPortfolioData.name})` : "ندارد"
+        },
+        fileAttachment: expMode === "file" ? uploadedFileData : null,
+        portfolioAttachment: uploadedPortfolioData
+      };
+
+      const submitBtn = document.getElementById("submit-btn");
+      const btnText = document.getElementById("t-submit-btn");
+      const spinner = document.getElementById("submit-spinner");
+
+      submitBtn.disabled = true;
+      btnText.textContent = dict.submittingBtn;
+      spinner.classList.remove("hidden");
+
+      try {
+        if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+          await fetch(GAS_WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          await new Promise(r => setTimeout(r, 800));
+        }
+
+        showFeedback(dict.successMsg, "success");
+        document.getElementById("recruitment-form").reset();
+        uploadedFileData = null;
+        uploadedPortfolioData = null;
+        document.getElementById("selected-file-badge").classList.add("hidden");
+        document.getElementById("selected-portfolio-badge").classList.add("hidden");
+        document.getElementById("birthDate").value = "";
+        updateCompletionCounter();
+      } catch (err) {
+        showFeedback(currentLang === "fa" ? "خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید." : "Network error. Please try again.", "error");
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = dict.submitBtn;
+        spinner.classList.add("hidden");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initJalaliDropdowns();
+      initExperienceSection();
+      initPortfolioSection();
+      detectUserIpAndLanguage();
+
+      document.getElementById("lang-select").addEventListener("change", (e) => {
+        applyLanguage(e.target.value);
+      });
+
+      const phoneInput = document.getElementById("phone");
+      const whatsappInput = document.getElementById("whatsapp");
+      const samePhoneChk = document.getElementById("same-phone-chk");
+
+      samePhoneChk.addEventListener("change", () => {
+        if (samePhoneChk.checked) {
+          whatsappInput.value = phoneInput.value;
+          updateCompletionCounter();
+        }
+      });
+
+      phoneInput.addEventListener("input", () => {
+        if (samePhoneChk.checked) {
+          whatsappInput.value = phoneInput.value;
+        }
+        updateCompletionCounter();
+      });
+
+      document.querySelectorAll("#recruitment-form input, #recruitment-form select, #recruitment-form textarea").forEach(el => {
+        el.addEventListener("input", updateCompletionCounter);
+        el.addEventListener("change", updateCompletionCounter);
+      });
+
+      document.getElementById("recruitment-form").addEventListener("submit", handleFormSubmit);
+    });
+  </script>
+</body>
+</html>
