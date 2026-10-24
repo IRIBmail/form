@@ -46,7 +46,6 @@
       font-family: 'Inter', 'Vazirmatn', sans-serif;
     }
 
-    /* Smooth focus & minimal scrollbar */
     .form-input {
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -59,7 +58,6 @@
       }
     }
 
-    /* Custom subtle background pattern (Light & Dark) */
     .bg-grid-pattern {
       background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
       background-size: 24px 24px;
@@ -70,7 +68,6 @@
       }
     }
 
-    /* Dragover state */
     .file-drop-zone.dragover {
       border-color: #0f172a;
       background-color: #f1f5f9;
@@ -80,6 +77,15 @@
         border-color: #f8fafc;
         background-color: #1e293b;
       }
+    }
+
+    .hp-field {
+      position: absolute !important;
+      left: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
   </style>
 </head>
@@ -151,6 +157,12 @@
       <!-- Recruitment Form -->
       <form id="recruitment-form" class="p-6 sm:p-10 space-y-8" novalidate>
 
+        <!-- Honeypot anti-bot field (must remain empty) -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="website-hp">Website</label>
+          <input type="text" id="website-hp" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <!-- Section 1: Personal Identity (Fields 1, 2, 3, 9) -->
         <section class="space-y-5">
           <div class="flex items-center gap-2.5 pb-2 border-b border-slate-100 dark:border-slate-800">
@@ -170,13 +182,15 @@
                 id="fullName"
                 name="fullName"
                 required
+                minlength="2"
+                maxlength="120"
                 autocomplete="name"
                 placeholder="مثال: علی محمدی"
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
               />
             </div>
 
-            <!-- 2. Gender -->
+            <!-- 2. Gender (Values synchronized with backend ALLOWED_GENDER_VALUES) -->
             <div>
               <label for="gender" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                 <span id="t-lbl-gender">۲. جنسیت</span>
@@ -189,8 +203,8 @@
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
               >
                 <option value="" id="t-opt-gender-placeholder" class="bg-white dark:bg-slate-900">انتخاب کنید...</option>
-                <option value="مرد / Male" id="t-opt-male" class="bg-white dark:bg-slate-900">مرد (Male)</option>
-                <option value="زن / Female" id="t-opt-female" class="bg-white dark:bg-slate-900">زن (Female)</option>
+                <option value="مرد (Male)" id="t-opt-male" class="bg-white dark:bg-slate-900">مرد (Male)</option>
+                <option value="زن (Female)" id="t-opt-female" class="bg-white dark:bg-slate-900">زن (Female)</option>
               </select>
             </div>
 
@@ -236,6 +250,8 @@
               <input
                 type="date"
                 id="birthDateGregorian"
+                min="1930-01-01"
+                max="2015-12-31"
                 class="hidden form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
               />
               <!-- Unified hidden input holding final birthDate value -->
@@ -253,6 +269,8 @@
                 id="passportNumber"
                 name="passportNumber"
                 required
+                minlength="5"
+                maxlength="25"
                 dir="ltr"
                 placeholder="Example: A12345678"
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 uppercase tracking-wider placeholder:normal-case placeholder:tracking-normal placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
@@ -280,6 +298,8 @@
                 id="phone"
                 name="phone"
                 required
+                minlength="7"
+                maxlength="24"
                 dir="ltr"
                 autocomplete="tel"
                 placeholder="+98 912 000 0000"
@@ -304,6 +324,8 @@
                 id="whatsapp"
                 name="whatsapp"
                 required
+                minlength="7"
+                maxlength="24"
                 dir="ltr"
                 placeholder="+98 912 000 0000"
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
@@ -321,6 +343,7 @@
                 id="email"
                 name="email"
                 required
+                maxlength="150"
                 dir="ltr"
                 autocomplete="email"
                 placeholder="name@example.com"
@@ -341,6 +364,8 @@
                 name="socialMedia"
                 rows="2"
                 required
+                minlength="2"
+                maxlength="1000"
                 placeholder="مثال: Instagram: @username | LinkedIn: linkedin.com/in/username | Telegram: @username"
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
               ></textarea>
@@ -367,6 +392,8 @@
                 id="country"
                 name="country"
                 required
+                minlength="2"
+                maxlength="100"
                 placeholder="مثال: ایران"
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
               />
@@ -383,6 +410,8 @@
                 id="city"
                 name="city"
                 required
+                minlength="2"
+                maxlength="100"
                 placeholder="مثال: تهران"
                 class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
               />
@@ -440,7 +469,7 @@
                 type="file"
                 id="resumeFile"
                 required
-                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
                 class="hidden"
               />
               <svg class="w-9 h-9 mx-auto text-slate-400 dark:text-slate-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,7 +480,7 @@
                 <span class="text-rose-500">*</span>
               </p>
               <p id="t-file-hint" class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
-                فرمت‌های مجاز: PDF, DOCX, JPG, PNG (حداکثر ۵ مگابایت)
+                فرمت‌های مجاز: PDF, DOCX, DOC, JPG, PNG, WEBP (حداکثر ۵ مگابایت)
               </p>
               <div id="selected-file-badge" class="hidden mt-3 inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-3 py-1.5 rounded-lg">
                 <span id="selected-file-name" class="truncate max-w-[220px]"></span>
@@ -470,6 +499,7 @@
               id="experienceText"
               name="experienceText"
               rows="4"
+              maxlength="5000"
               placeholder="نام شرکت‌ها، سمت شغلی، مدت فعالیت و مهارت‌های کلیدی خود را بنویسید..."
               class="form-input w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-slate-900 dark:focus:border-slate-400 focus:outline-none"
             ></textarea>
@@ -504,7 +534,7 @@
               <input
                 type="file"
                 id="portfolioFile"
-                accept=".pdf,.zip,.rar,.doc,.docx,.jpg,.jpeg,.png,.mp4,.mp3"
+                accept=".pdf,.zip,.rar,.doc,.docx,.jpg,.jpeg,.png,.webp"
                 class="hidden"
               />
               <svg class="w-9 h-9 mx-auto text-slate-400 dark:text-slate-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -514,7 +544,7 @@
                 برای انتخاب فایل نمونه‌کار کلیک کنید یا فایل را اینجا رها کنید
               </p>
               <p id="t-portfolio-hint" class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
-                فرمت‌های مجاز: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (حداکثر ۵ مگابایت)
+                فرمت‌های مجاز: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (حداکثر ۵ مگابایت)
               </p>
               <div id="selected-portfolio-badge" class="hidden mt-3 inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-3 py-1.5 rounded-lg">
                 <span id="selected-portfolio-name" class="truncate max-w-[220px]"></span>
@@ -526,7 +556,7 @@
 
         <!-- Submit Button & Status Message -->
         <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
-          <div id="form-feedback" class="hidden mb-4 p-4 rounded-xl text-xs sm:text-sm font-medium"></div>
+          <div id="form-feedback" class="hidden mb-4 p-4 rounded-xl text-xs sm:text-sm font-medium" role="status" aria-live="polite"></div>
 
           <button
             type="submit"
@@ -549,9 +579,17 @@
   <footer class="w-full py-6 text-center text-xs text-slate-400 dark:text-slate-500">
     <p id="t-footer">تمامی حقوق برای صدا و سیمای جمهوری اسلامی ایران محفوظ است</p>
   </footer>
+
   <script>
 
     const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW2hcGarYM1N8uqsRBZkzJ_PAiofyCA6F8_neHckWcmDE6n6gu8dPk38gcH7JT0fcG_Q/exec";
+
+    const FILE_LIMITS = {
+      MAX_RESUME_BYTES: 5 * 1024 * 1024,      // حداکثر ۵ مگابایت در فرانت‌اند (در بک‌اند تا ۱۰ مگابایت مجاز است)
+      MAX_PORTFOLIO_BYTES: 5 * 1024 * 1024,   // حداکثر ۵ مگابایت در فرانت‌اند (در بک‌اند تا ۱۵ مگابایت مجاز است)
+      MAX_TOTAL_BYTES: 10 * 1024 * 1024,      // حداکثر ۱۰ مگابایت مجموع فایل‌ها در فرانت‌اند (در بک‌اند تا ۲۰ مگابایت)
+      MIN_FILE_BYTES: 8
+    };
 
     function handleLogoError(imgEl) {
       if (!imgEl.dataset.triedWiki) {
@@ -564,6 +602,9 @@
       }
     }
 
+    /*************************************************************************
+     * ۲. دیکشنری ۲۰ زبانه کامل
+     *************************************************************************/
     const I18N = {
       fa: {
         dir: "rtl",
@@ -600,14 +641,14 @@
         expModeIntern: "سابقه کاری ندارم",
         expModeInternSub: "مایل به کارآموزی هستم",
         filePrompt: "برای انتخاب فایل رزومه کلیک کنید یا فایل را اینجا رها کنید",
-        fileHint: "فرمت‌های مجاز: PDF, DOCX, JPG, PNG (حداکثر ۵ مگابایت)",
+        fileHint: "فرمت‌های مجاز: PDF, DOCX, DOC, JPG, PNG, WEBP (حداکثر ۵ مگابایت)",
         lblExpText: "شرح سوابق شغلی، مهارت‌ها و تحصیلات مرتبط",
         phExpText: "نام شرکت‌ها، سمت شغلی، مدت فعالیت و مهارت‌های کلیدی خود را بنویسید...",
         internNote: "درخواست شما در رده «بدون سابقه کار و متقاضی دوره کارآموزی» ثبت خواهد شد. در صورت تمایل می‌توانید توضیحات تکمیلی را در کادر متن وارد کنید.",
         secPortfolio: "۱۱. آپلود نمونه‌کارها (اختیاری)",
         optBadge: "اختیاری",
         portfolioPrompt: "برای انتخاب فایل نمونه‌کار کلیک کنید یا فایل را اینجا رها کنید",
-        portfolioHint: "فرمت‌های مجاز: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (حداکثر ۵ مگابایت)",
+        portfolioHint: "فرمت‌های مجاز: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (حداکثر ۵ مگابایت)",
         submitBtn: "ثبت نهایی و ارسال اطلاعات",
         submittingBtn: "در حال ارسال اطلاعات...",
         footer: "تمامی حقوق برای صدا و سیمای جمهوری اسلامی ایران محفوظ است",
@@ -649,14 +690,14 @@
         expModeIntern: "No Work Experience",
         expModeInternSub: "Interested in Internship",
         filePrompt: "Click to upload your resume or drag & drop here",
-        fileHint: "Accepted formats: PDF, DOCX, JPG, PNG (Max 5MB)",
+        fileHint: "Accepted formats: PDF, DOCX, DOC, JPG, PNG, WEBP (Max 5MB)",
         lblExpText: "Summary of Work Experience, Skills & Education",
         phExpText: "List companies, roles, duration, and key professional skills...",
         internNote: "Your application will be registered under 'No prior experience / Interested in Internship'. You may optionally add notes below.",
         secPortfolio: "11. Upload Portfolio / Work Samples (Optional)",
         optBadge: "Optional",
         portfolioPrompt: "Click to upload your portfolio file or drag & drop here",
-        portfolioHint: "Accepted formats: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max 5MB)",
+        portfolioHint: "Accepted formats: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Max 5MB)",
         submitBtn: "Submit Application",
         submittingBtn: "Submitting Application...",
         footer: "All Rights Reserved by the Islamic Republic of Iran Broadcasting (IRIB)",
@@ -698,14 +739,14 @@
         expModeIntern: "لا توجد خبرة عملية",
         expModeInternSub: "أرغب في التدريب المهني",
         filePrompt: "انقر لاختيار ملف السيرة الذاتية أو اسحبه هنا",
-        fileHint: "الصيغ المسموحة: PDF, DOCX, JPG, PNG (الحد الأقصى 5 ميجابايت)",
+        fileHint: "الصيغ المسموحة: PDF, DOCX, DOC, JPG, PNG, WEBP (الحد الأقصى 5 ميجابايت)",
         lblExpText: "شرح الخبرات الوظيفية والمهارات",
         phExpText: "اكتب أسماء الشركات والمسمى الوظيفي والمهارات...",
         internNote: "سيتم تسجيل طلبك ضمن فئة 'بدون خبرة عملية / راغب في التدريب'.",
         secPortfolio: "١١. تحميل نماذج الأعمال (اختياري)",
         optBadge: "اختياري",
         portfolioPrompt: "انقر لاختيار ملف نماذج الأعمال أو اسحبه هنا",
-        portfolioHint: "الصيغ المسموحة: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (الحد الأقصى 5 ميجابايت)",
+        portfolioHint: "الصيغ المسموحة: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (الحد الأقصى 5 ميجابايت)",
         submitBtn: "إرسال الطلب نهائياً",
         submittingBtn: "جارٍ الإرسال...",
         footer: "جميع الحقوق محفوظة لهيئة الإذاعة والتلفزيون في الجمهورية الإسلامية الإيرانية",
@@ -747,14 +788,14 @@
         expModeIntern: "İş Deneyimim Yok",
         expModeInternSub: "Staj yapmak istiyorum",
         filePrompt: "Dosya seçmek için tıklayın veya buraya sürükleyin",
-        fileHint: "PDF, DOCX, JPG, PNG (Maks 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Maks 5MB)",
         lblExpText: "İş Deneyimi ve Yetenekler",
         phExpText: "Çalıştığınız kurumlar, pozisyon ve yeteneklerinizi yazınız...",
         internNote: "Başvurunuz 'Deneyimsiz / Stajyer Adayı' olarak kaydedilecektir.",
         secPortfolio: "11. Portfolyo / İş Örnekleri Yükle (İsteğe Bağlı)",
         optBadge: "İsteğe Bağlı",
         portfolioPrompt: "Portfolyo dosyası seçmek için tıklayın veya buraya sürükleyin",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Maks 5MB)",
         submitBtn: "Başvuruyu Gönder",
         submittingBtn: "Gönderiliyor...",
         footer: "Tüm Hakları İran İslam Cumhuriyeti Radyo ve Televizyon Kurumu'na (IRIB) Aittir",
@@ -796,14 +837,14 @@
         expModeIntern: "Keine Berufserfahrung",
         expModeInternSub: "Interesse an einem Praktikum",
         filePrompt: "Klicken Sie hier oder ziehen Sie Ihre Datei hierher",
-        fileHint: "PDF, DOCX, JPG, PNG (Max. 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Max. 5MB)",
         lblExpText: "Beschreibung der Berufserfahrung und Fähigkeiten",
         phExpText: "Unternehmen, Positionen und Fähigkeiten...",
         internNote: "Ihre Bewerbung wird als 'Keine Erfahrung / Praktikumsinteressiert' registriert.",
         secPortfolio: "11. Portfolio / Arbeitsproben hochladen (Optional)",
         optBadge: "Optional",
         portfolioPrompt: "Klicken Sie hier, um Ihr Portfolio hochzuladen, oder ziehen Sie es hierher",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max. 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Max. 5MB)",
         submitBtn: "Bewerbung absenden",
         submittingBtn: "Wird gesendet...",
         footer: "Alle Rechte vorbehalten für den Rundfunk der Islamischen Republik Iran (IRIB)",
@@ -845,14 +886,14 @@
         expModeIntern: "Sans expérience",
         expModeInternSub: "Intéressé(e) par un stage",
         filePrompt: "Cliquez pour choisir un fichier ou glissez-le ici",
-        fileHint: "PDF, DOCX, JPG, PNG (Max 5 Mo)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Max 5 Mo)",
         lblExpText: "Résumé des expériences et compétences",
         phExpText: "Entreprises, postes occupés et compétences...",
         internNote: "Votre candidature sera enregistrée sous 'Sans expérience / Demande de stage'.",
         secPortfolio: "11. Téléverser un Portfolio / Exemples de travaux (Optionnel)",
         optBadge: "Optionnel",
         portfolioPrompt: "Cliquez pour choisir votre portfolio ou glissez-le ici",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max 5 Mo)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Max 5 Mo)",
         submitBtn: "Envoyer la candidature",
         submittingBtn: "Envoi en cours...",
         footer: "Tous droits réservés à la Radio-Télévision de la République islamique d'Iran (IRIB)",
@@ -894,14 +935,14 @@
         expModeIntern: "Нет опыта работы",
         expModeInternSub: "Хочу пройти стажировку",
         filePrompt: "Нажмите для выбора файла или перетащите его сюда",
-        fileHint: "PDF, DOCX, JPG, PNG (макс. 5 МБ)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (макс. 5 МБ)",
         lblExpText: "Описание опыта работы и навыков",
         phExpText: "Укажите места работы, должности и ключевые навыки...",
         internNote: "Ваша заявка будет отмечена как 'Без опыта работы / Стажировка'.",
         secPortfolio: "11. Загрузка портфолио / примеров работ (Необязательно)",
         optBadge: "Необязательно",
         portfolioPrompt: "Нажмите для выбора файла портфолио или перетащите его сюда",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (макс. 5 МБ)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (макс. 5 МБ)",
         submitBtn: "Отправить анкету",
         submittingBtn: "Отправка...",
         footer: "Все права защищены Телерадиовещанием Исламской Республики Иран (IRIB)",
@@ -943,14 +984,14 @@
         expModeIntern: "Sin experiencia laboral",
         expModeInternSub: "Interesado en pasantía / prácticas",
         filePrompt: "Haga clic para subir su CV o arrástrelo aquí",
-        fileHint: "PDF, DOCX, JPG, PNG (Máx. 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Máx. 5MB)",
         lblExpText: "Resumen de experiencia laboral y habilidades",
         phExpText: "Empresas, puestos desempeñados y habilidades...",
         internNote: "Su solicitud se registrará como 'Sin experiencia / Interesado en prácticas'.",
         secPortfolio: "11. Subir Portafolio / Muestras de Trabajo (Opcional)",
         optBadge: "Opcional",
         portfolioPrompt: "Haga clic para subir su portafolio o arrástrelo aquí",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Máx. 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Máx. 5MB)",
         submitBtn: "Enviar Solicitud",
         submittingBtn: "Enviando...",
         footer: "Todos los derechos reservados para la Radiodifusión de la República Islámica de Irán (IRIB)",
@@ -992,14 +1033,14 @@
         expModeIntern: "无工作经验",
         expModeInternSub: "希望申请实习岗位",
         filePrompt: "点击选择简历文件或将文件拖放到此处",
-        fileHint: "支持格式：PDF, DOCX, JPG, PNG (最大 5MB)",
+        fileHint: "支持格式：PDF, DOCX, DOC, JPG, PNG, WEBP (最大 5MB)",
         lblExpText: "工作经历、技能与教育背景概述",
         phExpText: "请填写曾就职公司、职位、工作时间及核心技能...",
         internNote: "您的申请将归类为“无工作经验 / 申请实习”。您也可以在下方补充说明。",
         secPortfolio: "11. 上传作品集 / 作品样本（选填）",
         optBadge: "选填",
         portfolioPrompt: "点击选择作品集文件或将文件拖放到此处",
-        portfolioHint: "支持格式：PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (最大 5MB)",
+        portfolioHint: "支持格式：PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (最大 5MB)",
         submitBtn: "提交申请",
         submittingBtn: "正在提交...",
         footer: "伊朗伊斯兰共和国广播电视台 (IRIB) 版权所有",
@@ -1041,14 +1082,14 @@
         expModeIntern: "कोई कार्य अनुभव नहीं",
         expModeInternSub: "इंटर्नशिप में रुचि है",
         filePrompt: "फ़ाइल चुनने के लिए क्लिक करें या यहाँ ड्रैग करें",
-        fileHint: "स्वीकृत प्रारूप: PDF, DOCX, JPG, PNG (अधिकतम 5MB)",
+        fileHint: "स्वीकृत प्रारूप: PDF, DOCX, DOC, JPG, PNG, WEBP (अधिकतम 5MB)",
         lblExpText: "कार्य अनुभव और कौशल का विवरण",
         phExpText: "कंपनियों के नाम, पद और प्रमुख कौशल लिखें...",
         internNote: "आपका आवेदन 'कोई अनुभव नहीं / इंटर्नशिप' श्रेणी में दर्ज किया जाएगा।",
         secPortfolio: "11. पोर्टफोलियो / कार्य के नमूने अपलोड करें (वैकल्पिक)",
         optBadge: "वैकल्पिक",
         portfolioPrompt: "पोर्टफोलियो फ़ाइल चुनने के लिए क्लिक करें या यहाँ ड्रैग करें",
-        portfolioHint: "स्वीकृत प्रारूप: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (अधिकतम 5MB)",
+        portfolioHint: "स्वीकृत प्रारूप: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (अधिकतम 5MB)",
         submitBtn: "आवेदन जमा करें",
         submittingBtn: "जमा किया जा रहा है...",
         footer: "इस्लामिक रिपब्लिक ऑफ ईरान ब्रॉडकास्टिंग (IRIB) के पास सर्वाधिकार सुरक्षित हैं",
@@ -1090,14 +1131,14 @@
         expModeIntern: "کوئی تجربہ نہیں ہے",
         expModeInternSub: "انٹرن شپ میں دلچسپی ہے",
         filePrompt: "سی وی اپ لوڈ کرنے کے لیے کلک کریں یا فائل یہاں ڈریگ کریں",
-        fileHint: "فائل فارمیٹس: PDF, DOCX, JPG, PNG (زیادہ سے زیادہ 5MB)",
+        fileHint: "فائل فارمیٹس: PDF, DOCX, DOC, JPG, PNG, WEBP (زیادہ سے زیادہ 5MB)",
         lblExpText: "کام کے تجربے اور مہارتوں کی تفصیل",
         phExpText: "کمپنیوں کے نام، عہدہ اور اپنی مہارتیں لکھیں...",
         internNote: "آپ کی درخواست 'بغیر تجربہ / انٹرن شپ کے خواہشمند' کے طور پر درج کی جائے گی۔",
         secPortfolio: "11. پورٹ فولیو / کام کے نمونے اپ لوڈ کریں (اختیاری)",
         optBadge: "اختیاری",
         portfolioPrompt: "پورٹ فولیو فائل اپ لوڈ کرنے کے لیے کلک کریں یا فائل یہاں ڈریگ کریں",
-        portfolioHint: "فائل فارمیٹس: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (زیادہ سے زیادہ 5MB)",
+        portfolioHint: "فائل فارمیٹس: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (زیادہ سے زیادہ 5MB)",
         submitBtn: "درخواست جمع کریں",
         submittingBtn: "جمع کیا جا رہا ہے...",
         footer: "جملہ حقوق اسلامی جمہوریہ ایران کے نشریاتی ادارے (IRIB) کے لیے محفوظ ہیں",
@@ -1139,14 +1180,14 @@
         expModeIntern: "Sem experiência",
         expModeInternSub: "Interessado em estágio",
         filePrompt: "Clique para selecionar seu currículo ou arraste para cá",
-        fileHint: "PDF, DOCX, JPG, PNG (Máx. 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Máx. 5MB)",
         lblExpText: "Resumo da Experiência Profissional e Competências",
         phExpText: "Empresas, cargos e principais competências...",
         internNote: "Sua candidatura será registada como 'Sem experiência / Candidato a Estágio'.",
         secPortfolio: "11. Enviar Portfólio / Amostras de Trabalho (Opcional)",
         optBadge: "Opcional",
         portfolioPrompt: "Clique para selecionar seu portfólio ou arraste para cá",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Máx. 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Máx. 5MB)",
         submitBtn: "Enviar Candidatura",
         submittingBtn: "A enviar...",
         footer: "Todos os direitos reservados à Radiodifusão da República Islâmica do Irã (IRIB)",
@@ -1188,14 +1229,14 @@
         expModeIntern: "Nessuna esperienza",
         expModeInternSub: "Interessato a uno stage / tirocinio",
         filePrompt: "Clicca per caricare il CV o trascina il file qui",
-        fileHint: "PDF, DOCX, JPG, PNG (Max 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Max 5MB)",
         lblExpText: "Riepilogo delle esperienze lavorative e competenze",
         phExpText: "Aziende, ruoli ricoperti e competenze principali...",
         internNote: "La candidatura verrà registrata come 'Senza esperienza / Richiesta di stage'.",
         secPortfolio: "11. Carica Portfolio / Esempi di Lavoro (Opzionale)",
         optBadge: "Opzionale",
         portfolioPrompt: "Clicca per caricare il tuo portfolio o trascina il file qui",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Max 5MB)",
         submitBtn: "Invia Candidatura",
         submittingBtn: "Invio in corso...",
         footer: "Tutti i diritti riservati alla Radiotelevisione della Repubblica Islamica dell'Iran (IRIB)",
@@ -1237,14 +1278,14 @@
         expModeIntern: "実務経験なし",
         expModeInternSub: "インターンシップを希望",
         filePrompt: "クリックしてファイルを選択、またはここにドラッグ＆ドロップ",
-        fileHint: "対応形式: PDF, DOCX, JPG, PNG (最大 5MB)",
+        fileHint: "対応形式: PDF, DOCX, DOC, JPG, PNG, WEBP (最大 5MB)",
         lblExpText: "職務経歴・スキル・学歴の概要",
         phExpText: "勤務先、役職、期間、主なスキルなどをご記入ください...",
         internNote: "「実務経験なし／インターンシップ希望」として登録されます。",
         secPortfolio: "11. ポートフォリオ・作品サンプルのアップロード（任意）",
         optBadge: "任意",
         portfolioPrompt: "クリックしてポートフォリオを選択、またはここにドラッグ＆ドロップ",
-        portfolioHint: "対応形式: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (最大 5MB)",
+        portfolioHint: "対応形式: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (最大 5MB)",
         submitBtn: "応募内容を送信する",
         submittingBtn: "送信中...",
         footer: "イラン・イスラム共和国放送 (IRIB) がすべての権利を保有します",
@@ -1286,14 +1327,14 @@
         expModeIntern: "경력 없음",
         expModeInternSub: "인턴십 지원 희망",
         filePrompt: "클릭하여 이력서 파일을 선택하거나 이곳에 드래그하세요",
-        fileHint: "지원 형식: PDF, DOCX, JPG, PNG (최대 5MB)",
+        fileHint: "지원 형식: PDF, DOCX, DOC, JPG, PNG, WEBP (최대 5MB)",
         lblExpText: "경력 사항, 보유 기술 및 학력 요약",
         phExpText: "근무했던 회사명, 직책, 기간 및 주요 기술을 작성해 주세요...",
         internNote: "귀하의 지원서는 '경력 없음 / 인턴십 희망'으로 접수됩니다.",
         secPortfolio: "11. 포트폴리오 / 작업 샘플 업로드 (선택 사항)",
         optBadge: "선택 사항",
         portfolioPrompt: "클릭하여 포트폴리오 파일을 선택하거나 이곳에 드래그하세요",
-        portfolioHint: "지원 형식: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (최대 5MB)",
+        portfolioHint: "지원 형식: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (최대 5MB)",
         submitBtn: "지원서 제출하기",
         submittingBtn: "제출 중...",
         footer: "모든 권리는 이란 이슬람 공화국 방송(IRIB)에 있습니다",
@@ -1335,14 +1376,14 @@
         expModeIntern: "Geen werkervaring",
         expModeInternSub: "Geïnteresseerd in een stage",
         filePrompt: "Klik om uw CV te kiezen of sleep het bestand hierheen",
-        fileHint: "PDF, DOCX, JPG, PNG (Max. 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Max. 5MB)",
         lblExpText: "Overzicht van werkervaring en vaardigheden",
         phExpText: "Bedrijven, functies en belangrijkste vaardigheden...",
         internNote: "Uw sollicitatie wordt geregistreerd als 'Geen ervaring / Stage-aanvraag'.",
         secPortfolio: "11. Portfolio / Werkvoorbeelden uploaden (Optioneel)",
         optBadge: "Optioneel",
         portfolioPrompt: "Klik om uw portfolio te kiezen of sleep het bestand hierheen",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Max. 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Max. 5MB)",
         submitBtn: "Sollicitatie Verzenden",
         submittingBtn: "Bezig met verzenden...",
         footer: "Alle rechten voorbehouden aan de Islamitische Republiek Iran Omroep (IRIB)",
@@ -1384,14 +1425,14 @@
         expModeIntern: "Brak doświadczenia",
         expModeInternSub: "Chcę odbyć staż / praktyki",
         filePrompt: "Kliknij, aby wybrać plik CV lub przeciągnij go tutaj",
-        fileHint: "PDF, DOCX, JPG, PNG (Maks. 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Maks. 5MB)",
         lblExpText: "Opis doświadczenia zawodowego i umiejętności",
         phExpText: "Firmy, stanowiska oraz kluczowe umiejętności...",
         internNote: "Twoje zgłoszenie zostanie zapisane jako 'Brak doświadczenia / Staż'.",
         secPortfolio: "11. Prześlij Portfolio / Próbki Prac (Opcjonalnie)",
         optBadge: "Opcjonalnie",
         portfolioPrompt: "Kliknij, aby wybrać plik portfolio lub przeciągnij go tutaj",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks. 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Maks. 5MB)",
         submitBtn: "Wyślij Aplikację",
         submittingBtn: "Wysyłanie...",
         footer: "Wszelkie prawa zastrzeżone dla Telewizji i Radia Islamskiej Republiki Iranu (IRIB)",
@@ -1433,14 +1474,14 @@
         expModeIntern: "Belum Ada Pengalaman",
         expModeInternSub: "Tertarik mengikuti program magang",
         filePrompt: "Klik untuk memilih file CV atau seret ke sini",
-        fileHint: "Format: PDF, DOCX, JPG, PNG (Maks 5MB)",
+        fileHint: "Format: PDF, DOCX, DOC, JPG, PNG, WEBP (Maks 5MB)",
         lblExpText: "Ringkasan Pengalaman Kerja & Keahlian",
         phExpText: "Sebutkan nama perusahaan, posisi, durasi, dan keahlian...",
         internNote: "Lamaran Anda akan didaftarkan dalam kategori 'Tanpa Pengalaman / Peminat Magang'.",
         secPortfolio: "11. Unggah Portofolio / Contoh Karya (Opsional)",
         optBadge: "Opsional",
         portfolioPrompt: "Klik untuk memilih file portofolio atau seret ke sini",
-        portfolioHint: "Format: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks 5MB)",
+        portfolioHint: "Format: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Maks 5MB)",
         submitBtn: "Kirim Lamaran",
         submittingBtn: "Mengirim...",
         footer: "Hak Cipta Dilindungi Undang-Undang untuk Lembaga Penyiaran Republik Islam Iran (IRIB)",
@@ -1482,14 +1523,14 @@
         expModeIntern: "İş Təcrübəm Yoxdur",
         expModeInternSub: "Təcrübəçi (staj) olmaq istəyirəm",
         filePrompt: "CV faylını seçmək üçün klikləyin və ya bura sürükləyin",
-        fileHint: "PDF, DOCX, JPG, PNG (Maks 5MB)",
+        fileHint: "PDF, DOCX, DOC, JPG, PNG, WEBP (Maks 5MB)",
         lblExpText: "İş Təcrübəsi və Bacarıqların Təsviri",
         phExpText: "İşlədiyiniz şirkətlər, vəzifə və əsas bacarıqlarınız...",
         internNote: "Müraciətiniz 'Təcrübəsiz / Təcrübə Proqramı (Staj)' kimi qeydə alınacaq.",
         secPortfolio: "11. Portfolio / İş Nümunələrini Yüklə (İstəyə bağlı)",
         optBadge: "İstəyə bağlı",
         portfolioPrompt: "Portfolio faylını seçmək üçün klikləyin və ya bura sürükləyin",
-        portfolioHint: "PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (Maks 5MB)",
+        portfolioHint: "PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (Maks 5MB)",
         submitBtn: "Müraciəti Göndər",
         submittingBtn: "Göndərilir...",
         footer: "Bütün hüquqlar İran İslam Respublikasının Radio və Televiziya Təşkilatına (IRIB) məxsusdur",
@@ -1531,14 +1572,14 @@
         expModeIntern: "ئەزموونی کارم نییە",
         expModeInternSub: "ئارەزووی ڕاهێنان (کارئامووزی) دەکەم",
         filePrompt: "کرتە بکە بۆ هەڵبژاردنی فایلی سیڤی یان لێرە دایبنێ",
-        fileHint: "فۆرماتە ڕێپێدراوەکان: PDF, DOCX, JPG, PNG (زۆرترین ٥ مێگابایت)",
+        fileHint: "فۆرماتە ڕێپێدراوەکان: PDF, DOCX, DOC, JPG, PNG, WEBP (زۆرترین ٥ مێگابایت)",
         lblExpText: "کورتەی ئەزموونی کار و لێهاتووییەکان",
         phExpText: "ناوی کۆمپانیاکان، ناونیشانی کار و کارامەییەکان بنووسە...",
         internNote: "داواکارییەکەت لە بەشی «بێ ئەزموونی کار / خوازیاری خولی ڕاهێنان» تۆمار دەکرێت.",
         secPortfolio: "١١. بارکردنی نموونەی کارەکان (ئارەزوومەندانە)",
         optBadge: "ئارەزوومەندانە",
         portfolioPrompt: "کرتە بکە بۆ هەڵبژاردنی فایلی نموونەکار یان لێرە دایبنێ",
-        portfolioHint: "فۆرماتە ڕێپێدراوەکان: PDF, ZIP, DOCX, JPG, PNG, MP4, MP3 (زۆرترین ٥ مێگابایت)",
+        portfolioHint: "فۆرماتە ڕێپێدراوەکان: PDF, ZIP, RAR, DOCX, DOC, JPG, PNG, WEBP (زۆرترین ٥ مێگابایت)",
         submitBtn: "تۆمارکردن و ناردنی زانیارییەکان",
         submittingBtn: "لە حالەتی ناردندایە...",
         footer: "هەموو مافێک بۆ ڕادیۆ و تەلەفزیۆنی کۆماری ئیسلامیی ئێران پارێزراوە",
@@ -1548,14 +1589,262 @@
     };
 
     /*************************************************************************
-     * ۴. متغیرهای وضعیت برنامه
+     * ۳. متغیرهای وضعیت برنامه و مدیریت خواندن فایل‌ها
      *************************************************************************/
     let currentLang = "fa";
     let isJalaliMode = true;
-    let uploadedFileData = null; // { name, mimeType, base64 }
-    let uploadedPortfolioData = null; // { name, mimeType, base64 }
-    let detectedVisitorInfo = { ip: "", countryCode: "", countryName: "", city: "" };
+    let uploadedFileData = null;       // { name, mimeType, base64, sizeBytes }
+    let uploadedPortfolioData = null;  // { name, mimeType, base64, sizeBytes }
+    let isReadingResumeFile = false;
+    let isReadingPortfolioFile = false;
+    let resumeReadToken = 0;
+    let portfolioReadToken = 0;
 
+    /*************************************************************************
+     * ۴. توابع کمکی اعتبارسنجی، نرمال‌سازی ارقام و بررسی امضای باینری فایل (Magic Bytes)
+     *************************************************************************/
+    function normalizeDigits(str) {
+      return String(str || "")
+        .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+        .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660));
+    }
+
+    function isLocalizedFa() {
+      return ["fa", "ar", "ur", "ku"].includes(currentLang);
+    }
+
+    function msgText(faText, enText) {
+      return isLocalizedFa() ? faText : enText;
+    }
+
+    /**
+     * بررسی امضای باینری فایل (Magic Bytes) در فرانت‌اند هماهنگ با تابع detectFileTypeByMagicBytes در بک‌اند
+     */
+    function verifyMagicBytesFromBase64(base64Str, fileName, allowArchives) {
+      try {
+        const sampleBase64 = base64Str.slice(0, 64);
+        const binaryStr = atob(sampleBase64);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) {
+          bytes[i] = binaryStr.charCodeAt(i) & 0xFF;
+        }
+
+        const b = (idx) => (idx < bytes.length ? bytes[idx] : -1);
+        const extMatch = String(fileName || "").toLowerCase().match(/\.([a-z0-9]{2,5})$/);
+        const ext = extMatch ? extMatch[1] : "";
+
+        // 1. PDF: %PDF- (25 50 44 46 2D)
+        if (b(0) === 0x25 && b(1) === 0x50 && b(2) === 0x44 && b(3) === 0x46 && b(4) === 0x2D) {
+          return { valid: true, mimeType: "application/pdf" };
+        }
+
+        // 2. PNG: 89 50 4E 47 0D 0A 1A 0A
+        if (
+          b(0) === 0x89 && b(1) === 0x50 && b(2) === 0x4E && b(3) === 0x47 &&
+          b(4) === 0x0D && b(5) === 0x0A && b(6) === 0x1A && b(7) === 0x0A
+        ) {
+          return { valid: true, mimeType: "image/png" };
+        }
+
+        // 3. JPEG: FF D8 FF
+        if (b(0) === 0xFF && b(1) === 0xD8 && b(2) === 0xFF) {
+          return { valid: true, mimeType: "image/jpeg" };
+        }
+
+        // 4. WEBP: RIFF....WEBP
+        if (
+          b(0) === 0x52 && b(1) === 0x49 && b(2) === 0x46 && b(3) === 0x46 &&
+          b(8) === 0x57 && b(9) === 0x45 && b(10) === 0x42 && b(11) === 0x50
+        ) {
+          return { valid: true, mimeType: "image/webp" };
+        }
+
+        // 5. ZIP / DOCX: PK.. (50 4B 03 04)
+        if (b(0) === 0x50 && b(1) === 0x4B && b(2) === 0x03 && b(3) === 0x04) {
+          if (ext === "docx") {
+            return {
+              valid: true,
+              mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            };
+          }
+          if (allowArchives && ext === "zip") {
+            return { valid: true, mimeType: "application/zip" };
+          }
+          if (!allowArchives && ext !== "docx") {
+            return { valid: false };
+          }
+          return { valid: true, mimeType: "application/zip" };
+        }
+
+        // 6. DOC (OLE2 Compound Document): D0 CF 11 E0 A1 B1 1A E1
+        if (
+          b(0) === 0xD0 && b(1) === 0xCF && b(2) === 0x11 && b(3) === 0xE0 &&
+          b(4) === 0xA1 && b(5) === 0xB1 && b(6) === 0x1A && b(7) === 0xE1
+        ) {
+          return { valid: true, mimeType: "application/msword" };
+        }
+
+        // 7. RAR: 52 61 72 21 1A 07
+        if (
+          allowArchives &&
+          b(0) === 0x52 && b(1) === 0x61 && b(2) === 0x72 && b(3) === 0x21 && b(4) === 0x1A && b(5) === 0x07
+        ) {
+          return { valid: true, mimeType: "application/vnd.rar" };
+        }
+
+        return { valid: false };
+      } catch (e) {
+        return { valid: false };
+      }
+    }
+
+    /**
+     * اعتبارسنجی جامع فیلدهای فرم در سمت کاربر (هماهنگ با validateMandatoryFields در Code.gs)
+     */
+    function validateFormFieldsClient(values) {
+      // ۱. نام و نام‌خانوادگی
+      if (!values.fullName) {
+        return { fieldId: "fullName", message: msgText("لطفاً نام و نام‌خانوادگی خود را وارد نمایید.", "Please enter your full name.") };
+      }
+      if (values.fullName.length < 2 || values.fullName.length > 120) {
+        return { fieldId: "fullName", message: msgText("طول نام و نام‌خانوادگی باید بین ۲ تا ۱۲۰ کاراکتر باشد.", "Full name must be between 2 and 120 characters.") };
+      }
+
+      // ۲. جنسیت
+      const allowedGenders = ["مرد (male)", "زن (female)", "مرد", "زن", "male", "female", "other"];
+      if (!values.gender || !allowedGenders.includes(values.gender.toLowerCase())) {
+        return { fieldId: "gender", message: msgText("لطفاً جنسیت را از لیست انتخاب نمایید.", "Please select a valid gender option.") };
+      }
+
+      // ۳. تاریخ تولد
+      if (!values.birthDate) {
+        return { fieldId: isJalaliMode ? "jalali-day" : "birthDateGregorian", message: msgText("لطفاً تاریخ تولد خود را به طور کامل انتخاب نمایید.", "Please select your complete date of birth.") };
+      }
+      if (!isValidBirthDateClient(values.birthDate)) {
+        return { fieldId: isJalaliMode ? "jalali-year" : "birthDateGregorian", message: msgText("فرمت یا محدوده تاریخ تولد وارد شده معتبر نیست (شمسی: ۱۳۱۰ تا ۱۳۹۵ / میلادی: ۱۹۳۰ تا ۲۰۱۵).", "Invalid birth date format or year range (1930–2015 / Jalali 1310–1395).") };
+      }
+
+      // ۴. شماره پاسپورت
+      const normPassport = normalizeDigits(values.passportNumber).trim();
+      if (!normPassport) {
+        return { fieldId: "passportNumber", message: msgText("لطفاً شماره پاسپورت خود را وارد نمایید.", "Please enter your passport number.") };
+      }
+      const passportCodeRegex = /^[A-Za-z0-9][A-Za-z0-9\-\s]{4,24}$/;
+      const persianStatusRegex = /^[\u0600-\u06FF0-9A-Za-z\-\s()]{2,30}$/;
+      if (normPassport.length < 2 || normPassport.length > 30 || (!passportCodeRegex.test(normPassport) && !persianStatusRegex.test(normPassport))) {
+        return { fieldId: "passportNumber", message: msgText("شماره پاسپورت وارد شده معتبر نیست (بین ۵ تا ۲۵ کاراکتر شامل حروف و اعداد).", "Invalid passport number (must be 5 to 25 alphanumeric characters).") };
+      }
+
+      // ۵. شماره تماس
+      if (!isValidPhoneClient(values.phone)) {
+        return { fieldId: "phone", message: msgText("فرمت شماره تماس معتبر نیست (بین ۷ تا ۱۵ رقم).", "Invalid phone number format (must contain 7 to 15 digits).") };
+      }
+
+      // ۶. شماره واتساپ
+      if (!isValidPhoneClient(values.whatsapp)) {
+        return { fieldId: "whatsapp", message: msgText("فرمت شماره واتساپ معتبر نیست (بین ۷ تا ۱۵ رقم).", "Invalid WhatsApp number format (must contain 7 to 15 digits).") };
+      }
+
+      // ۷. ایمیل
+      const normEmail = normalizeDigits(values.email).trim();
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+      if (!normEmail || normEmail.length > 150 || !emailRegex.test(normEmail)) {
+        return { fieldId: "email", message: msgText("فرمت آدرس ایمیل وارد شده معتبر نیست.", "Please enter a valid email address.") };
+      }
+
+      // ۸. صفحات مجازی
+      if (!values.socialMedia || values.socialMedia.length < 2 || values.socialMedia.length > 1000) {
+        return { fieldId: "socialMedia", message: msgText("لطفاً اطلاعات صفحات مجازی خود را وارد کنید (بین ۲ تا ۱۰۰۰ کاراکتر).", "Please enter your social media profiles (2 to 1000 characters).") };
+      }
+
+      // ۹. کشور و شهر محل سکونت
+      if (!values.country || values.country.length < 2 || values.country.length > 100) {
+        return { fieldId: "country", message: msgText("نام کشور محل سکونت باید بین ۲ تا ۱۰۰ کاراکتر باشد.", "Country name must be between 2 and 100 characters.") };
+      }
+      if (!values.city || values.city.length < 2 || values.city.length > 100) {
+        return { fieldId: "city", message: msgText("نام شهر محل سکونت باید بین ۲ تا ۱۰۰ کاراکتر باشد.", "City name must be between 2 and 100 characters.") };
+      }
+
+      // ۱۰. وضعیت سابقه کار و فایل‌ها
+      if (!["file", "text", "internship"].includes(values.expMode)) {
+        return { fieldId: "exp-card-file", message: msgText("لطفاً یکی از گزینه‌های وضعیت سابقه کار را انتخاب نمایید.", "Please select a valid work experience option.") };
+      }
+
+      if (isReadingResumeFile || isReadingPortfolioFile) {
+        return { fieldId: "submit-btn", message: msgText("فایل انتخاب‌شده در حال پردازش است؛ لطفاً چند لحظه صبر کنید.", "Selected file is still being processed; please wait a moment.") };
+      }
+
+      if (values.expMode === "file") {
+        if (!uploadedFileData || !uploadedFileData.base64) {
+          return { fieldId: "file-drop-area", message: msgText("لطفاً فایل رزومه خود را انتخاب کنید یا گزینه نوشتن متن / کارآموزی را برگزینید.", "Please upload your resume file or select another experience option.") };
+        }
+      } else if (values.expMode === "text") {
+        if (!values.expText || values.expText.length < 5) {
+          return { fieldId: "experienceText", message: msgText("در حالت نوشتن سابقه کار، وارد کردن شرح سوابق (حداقل ۵ کاراکتر) الزامی است.", "Please enter your work experience details (minimum 5 characters).") };
+        }
+        if (values.expText.length > 5000) {
+          return { fieldId: "experienceText", message: msgText("شرح سابقه کار نمی‌تواند بیش از ۵۰۰۰ کاراکتر باشد.", "Work experience description cannot exceed 5000 characters.") };
+        }
+      } else if (values.expMode === "internship") {
+        if (values.expText && values.expText.length > 5000) {
+          return { fieldId: "experienceText", message: msgText("توضیحات نمی‌تواند بیش از ۵۰۰۰ کاراکتر باشد.", "Description cannot exceed 5000 characters.") };
+        }
+      }
+
+      // ۱۱. بررسی مجموع حجم فایل‌ها
+      const resumeBytes = (values.expMode === "file" && uploadedFileData) ? (uploadedFileData.sizeBytes || 0) : 0;
+      const portfolioBytes = uploadedPortfolioData ? (uploadedPortfolioData.sizeBytes || 0) : 0;
+      if (resumeBytes + portfolioBytes > FILE_LIMITS.MAX_TOTAL_BYTES) {
+        return { fieldId: "portfolio-drop-area", message: msgText("مجموع حجم فایل رزومه و نمونه‌کار نباید بیشتر از ۱۰ مگابایت باشد.", "Combined size of resume and portfolio files must not exceed 10MB.") };
+      }
+
+      return null;
+    }
+
+    function isValidPhoneClient(rawPhone) {
+      const normalized = normalizeDigits(rawPhone).trim();
+      if (normalized.length < 7 || normalized.length > 24) return false;
+      if (!/^\+?[0-9\s\-().]+$/.test(normalized)) return false;
+      const digitsOnly = normalized.replace(/\D/g, "");
+      return digitsOnly.length >= 7 && digitsOnly.length <= 15;
+    }
+
+    function isValidBirthDateClient(rawDate) {
+      const normalized = normalizeDigits(rawDate).trim();
+      if (normalized.length < 6 || normalized.length > 30) return false;
+
+      const matchYMD = normalized.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/);
+      if (!matchYMD) return false;
+
+      const year = parseInt(matchYMD[1], 10);
+      const month = parseInt(matchYMD[2], 10);
+      const day = parseInt(matchYMD[3], 10);
+
+      if (month < 1 || month > 12 || day < 1 || day > 31) return false;
+
+      // بررسی منطقی روزهای ماه در تقویم شمسی
+      if (year >= 1310 && year <= 1395) {
+        if (month >= 7 && month <= 11 && day > 30) return false;
+        if (month === 12 && day > 30) return false;
+        return true;
+      }
+
+      // بررسی منطقی سال میلادی
+      if (year >= 1930 && year <= 2015) {
+        const testDate = new Date(year, month - 1, day);
+        return (
+          testDate.getFullYear() === year &&
+          testDate.getMonth() === month - 1 &&
+          testDate.getDate() === day
+        );
+      }
+
+      return false;
+    }
+
+    /*************************************************************************
+     * ۵. مدیریت تقویم شمسی و میلادی
+     *************************************************************************/
     function initJalaliDropdowns() {
       const daySel = document.getElementById("jalali-day");
       const yearSel = document.getElementById("jalali-year");
@@ -1569,7 +1858,7 @@
         daySel.appendChild(opt);
       }
 
-      for (let y = 1388; y >= 1320; y--) {
+      for (let y = 1395; y >= 1310; y--) {
         const opt = document.createElement("option");
         opt.value = String(y);
         opt.textContent = y;
@@ -1615,6 +1904,9 @@
       document.getElementById("birthDateGregorian").dispatchEvent(event);
     }
 
+    /*************************************************************************
+     * ۶. اعمال زبان و تشخیص خودکار کشور (بدون ذخیره یا ارسال آی‌پی شخصی کاربر)
+     *************************************************************************/
     function applyLanguage(langCode) {
       const dict = I18N[langCode] || I18N.en;
       currentLang = I18N[langCode] ? langCode : "en";
@@ -1704,19 +1996,19 @@
       return "en";
     }
 
-    async function detectUserIpAndLanguage() {
+    async function detectUserLanguageByRegion() {
       const apis = [
         {
           url: "https://ipwho.is/",
-          parse: (d) => d && d.success !== false ? { ip: d.ip, code: d.country_code, country: d.country, city: d.city } : null
+          parse: (d) => d && d.success !== false ? { code: d.country_code, country: d.country, city: d.city } : null
         },
         {
           url: "https://ipapi.co/json/",
-          parse: (d) => d && d.country_code ? { ip: d.ip, code: d.country_code, country: d.country_name, city: d.city } : null
+          parse: (d) => d && d.country_code ? { code: d.country_code, country: d.country_name, city: d.city } : null
         },
         {
           url: "https://api.country.is/",
-          parse: (d) => d && d.country ? { ip: d.ip, code: d.country, country: d.country, city: "" } : null
+          parse: (d) => d && d.country ? { code: d.country, country: d.country, city: "" } : null
         }
       ];
 
@@ -1731,13 +2023,6 @@
             const raw = await res.json();
             const info = api.parse(raw);
             if (info && info.code) {
-              detectedVisitorInfo = {
-                ip: info.ip || "",
-                countryCode: info.code,
-                countryName: info.country || info.code,
-                city: info.city || ""
-              };
-
               const targetLang = mapCountryToLang(info.code);
               applyLanguage(targetLang);
 
@@ -1754,11 +2039,52 @@
             }
           }
         } catch (err) {
+          // نادیده گرفتن خطای سرویس تشخیص زبان و ادامه به زبان پیش‌فرض مرورگر
         }
       }
 
       const browserLang = (navigator.language || "fa").slice(0, 2).toLowerCase();
       applyLanguage(I18N[browserLang] ? browserLang : "fa");
+    }
+
+    /*************************************************************************
+     * ۷. مدیریت کامل فایل‌های رزومه و نمونه‌کار (پاک‌سازی وضعیت قبلی + مدیریت خطای FileReader)
+     *************************************************************************/
+    function clearResumeFileState() {
+      resumeReadToken++;
+      isReadingResumeFile = false;
+      uploadedFileData = null;
+      const fileInput = document.getElementById("resumeFile");
+      const fileBadge = document.getElementById("selected-file-badge");
+      const fileNameSpan = document.getElementById("selected-file-name");
+      if (fileInput) fileInput.value = "";
+      if (fileNameSpan) fileNameSpan.textContent = "";
+      if (fileBadge) fileBadge.classList.add("hidden");
+      updateSubmitButtonLoadingState();
+      updateCompletionCounter();
+    }
+
+    function clearPortfolioFileState() {
+      portfolioReadToken++;
+      isReadingPortfolioFile = false;
+      uploadedPortfolioData = null;
+      const fileInput = document.getElementById("portfolioFile");
+      const fileBadge = document.getElementById("selected-portfolio-badge");
+      const fileNameSpan = document.getElementById("selected-portfolio-name");
+      if (fileInput) fileInput.value = "";
+      if (fileNameSpan) fileNameSpan.textContent = "";
+      if (fileBadge) fileBadge.classList.add("hidden");
+      updateSubmitButtonLoadingState();
+    }
+
+    function updateSubmitButtonLoadingState() {
+      const submitBtn = document.getElementById("submit-btn");
+      if (!submitBtn) return;
+      if (isReadingResumeFile || isReadingPortfolioFile) {
+        submitBtn.disabled = true;
+      } else if (!submitBtn.dataset.submitting) {
+        submitBtn.disabled = false;
+      }
     }
 
     function initExperienceSection() {
@@ -1840,34 +2166,110 @@
       fileInput.addEventListener("change", () => {
         if (fileInput.files && fileInput.files[0]) {
           handleSelectedFile(fileInput.files[0]);
+        } else {
+          clearResumeFileState();
         }
       });
 
       removeFileBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        uploadedFileData = null;
-        fileInput.value = "";
-        fileBadge.classList.add("hidden");
-        updateCompletionCounter();
+        clearResumeFileState();
       });
 
       function handleSelectedFile(file) {
-        if (file.size > 5 * 1024 * 1024) {
-          showFeedback("حجم فایل انتخاب شده نباید بیشتر از ۵ مگابایت باشد / Max file size is 5MB.", "error");
+        // ابتدا وضعیت فایل قبلی را به صورت کامل پاک می‌کنیم تا در صورت خطا، فایل قبلی ارسال نشود
+        clearResumeFileState();
+        hideFeedback();
+
+        if (!file || file.size < FILE_LIMITS.MIN_FILE_BYTES) {
+          showFeedback(
+            msgText("فایل رزومه انتخاب شده خالی یا نامعتبر است.", "Selected resume file is empty or invalid."),
+            "error"
+          );
           return;
         }
+
+        if (file.size > FILE_LIMITS.MAX_RESUME_BYTES) {
+          showFeedback(
+            msgText("حجم فایل رزومه انتخاب شده نباید بیشتر از ۵ مگابایت باشد.", "Max resume file size is 5MB."),
+            "error"
+          );
+          return;
+        }
+
+        const allowedResumeExts = ["pdf", "doc", "docx", "jpg", "jpeg", "png", "webp"];
+        const extMatch = String(file.name || "").toLowerCase().match(/\.([a-z0-9]{2,5})$/);
+        const ext = extMatch ? extMatch[1] : "";
+        if (!allowedResumeExts.includes(ext)) {
+          showFeedback(
+            msgText("فرمت فایل رزومه مجاز نیست. فرمت‌های مجاز: PDF, DOC, DOCX, JPG, PNG, WEBP.", "Unsupported resume file format. Allowed: PDF, DOC, DOCX, JPG, PNG, WEBP."),
+            "error"
+          );
+          return;
+        }
+
+        const currentToken = ++resumeReadToken;
+        isReadingResumeFile = true;
+        updateSubmitButtonLoadingState();
+
         const reader = new FileReader();
+
+        reader.onerror = function() {
+          if (currentToken !== resumeReadToken) return;
+          clearResumeFileState();
+          showFeedback(
+            msgText("خطا در خواندن فایل رزومه. لطفاً مجدداً فایل را انتخاب کنید.", "Error reading resume file. Please select the file again."),
+            "error"
+          );
+        };
+
+        reader.onabort = function() {
+          if (currentToken !== resumeReadToken) return;
+          clearResumeFileState();
+          showFeedback(
+            msgText("عملیات خواندن فایل رزومه لغو شد.", "Reading resume file was aborted."),
+            "error"
+          );
+        };
+
         reader.onload = function(evt) {
-          const base64Raw = evt.target.result.split(",")[1];
+          if (currentToken !== resumeReadToken) return;
+          isReadingResumeFile = false;
+          updateSubmitButtonLoadingState();
+
+          const resultStr = evt && evt.target && typeof evt.target.result === "string" ? evt.target.result : "";
+          const base64Raw = resultStr.includes(",") ? resultStr.split(",")[1] : "";
+
+          if (!base64Raw) {
+            clearResumeFileState();
+            showFeedback(
+              msgText("امکان پردازش محتوای فایل رزومه وجود ندارد.", "Unable to process resume file content."),
+              "error"
+            );
+            return;
+          }
+
+          const signatureCheck = verifyMagicBytesFromBase64(base64Raw, file.name, false);
+          if (!signatureCheck.valid) {
+            clearResumeFileState();
+            showFeedback(
+              msgText("محتوای واقعی فایل رزومه با فرمت‌های مجاز (PDF, Word, Image) مطابقت ندارد.", "File content does not match allowed resume formats (PDF, Word, Image)."),
+              "error"
+            );
+            return;
+          }
+
           uploadedFileData = {
             name: file.name,
-            mimeType: file.type || "application/octet-stream",
-            base64: base64Raw
+            mimeType: signatureCheck.mimeType || file.type || "application/octet-stream",
+            base64: base64Raw,
+            sizeBytes: file.size
           };
           fileNameSpan.textContent = file.name;
           fileBadge.classList.remove("hidden");
           updateCompletionCounter();
         };
+
         reader.readAsDataURL(file);
       }
     }
@@ -1903,58 +2305,146 @@
       fileInput.addEventListener("change", () => {
         if (fileInput.files && fileInput.files[0]) {
           handleSelectedPortfolio(fileInput.files[0]);
+        } else {
+          clearPortfolioFileState();
         }
       });
 
       removeFileBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        uploadedPortfolioData = null;
-        fileInput.value = "";
-        fileBadge.classList.add("hidden");
+        clearPortfolioFileState();
       });
 
       function handleSelectedPortfolio(file) {
-        if (file.size > 5 * 1024 * 1024) {
-          showFeedback("حجم فایل انتخاب شده نباید بیشتر از ۵ مگابایت باشد / Max file size is 5MB.", "error");
+        // ابتدا وضعیت فایل قبلی نمونه‌کار را به صورت کامل پاک می‌کنیم
+        clearPortfolioFileState();
+        hideFeedback();
+
+        if (!file || file.size < FILE_LIMITS.MIN_FILE_BYTES) {
+          showFeedback(
+            msgText("فایل نمونه‌کار انتخاب شده خالی یا نامعتبر است.", "Selected portfolio file is empty or invalid."),
+            "error"
+          );
           return;
         }
+
+        if (file.size > FILE_LIMITS.MAX_PORTFOLIO_BYTES) {
+          showFeedback(
+            msgText("حجم فایل نمونه‌کار انتخاب شده نباید بیشتر از ۵ مگابایت باشد.", "Max portfolio file size is 5MB."),
+            "error"
+          );
+          return;
+        }
+
+        const allowedPortfolioExts = ["pdf", "zip", "rar", "doc", "docx", "jpg", "jpeg", "png", "webp"];
+        const extMatch = String(file.name || "").toLowerCase().match(/\.([a-z0-9]{2,5})$/);
+        const ext = extMatch ? extMatch[1] : "";
+        if (!allowedPortfolioExts.includes(ext)) {
+          showFeedback(
+            msgText("فرمت فایل نمونه‌کار مجاز نیست. فرمت‌های مجاز: PDF, ZIP, RAR, DOC, DOCX, JPG, PNG, WEBP.", "Unsupported portfolio file format. Allowed: PDF, ZIP, RAR, DOC, DOCX, JPG, PNG, WEBP."),
+            "error"
+          );
+          return;
+        }
+
+        const currentToken = ++portfolioReadToken;
+        isReadingPortfolioFile = true;
+        updateSubmitButtonLoadingState();
+
         const reader = new FileReader();
+
+        reader.onerror = function() {
+          if (currentToken !== portfolioReadToken) return;
+          clearPortfolioFileState();
+          showFeedback(
+            msgText("خطا در خواندن فایل نمونه‌کار. لطفاً مجدداً فایل را انتخاب کنید.", "Error reading portfolio file. Please select the file again."),
+            "error"
+          );
+        };
+
+        reader.onabort = function() {
+          if (currentToken !== portfolioReadToken) return;
+          clearPortfolioFileState();
+          showFeedback(
+            msgText("عملیات خواندن فایل نمونه‌کار لغو شد.", "Reading portfolio file was aborted."),
+            "error"
+          );
+        };
+
         reader.onload = function(evt) {
-          const base64Raw = evt.target.result.split(",")[1];
+          if (currentToken !== portfolioReadToken) return;
+          isReadingPortfolioFile = false;
+          updateSubmitButtonLoadingState();
+
+          const resultStr = evt && evt.target && typeof evt.target.result === "string" ? evt.target.result : "";
+          const base64Raw = resultStr.includes(",") ? resultStr.split(",")[1] : "";
+
+          if (!base64Raw) {
+            clearPortfolioFileState();
+            showFeedback(
+              msgText("امکان پردازش محتوای فایل نمونه‌کار وجود ندارد.", "Unable to process portfolio file content."),
+              "error"
+            );
+            return;
+          }
+
+          const signatureCheck = verifyMagicBytesFromBase64(base64Raw, file.name, true);
+          if (!signatureCheck.valid) {
+            clearPortfolioFileState();
+            showFeedback(
+              msgText("محتوای واقعی فایل نمونه‌کار با فرمت‌های مجاز مطابقت ندارد.", "Portfolio file content does not match allowed formats."),
+              "error"
+            );
+            return;
+          }
+
           uploadedPortfolioData = {
             name: file.name,
-            mimeType: file.type || "application/octet-stream",
-            base64: base64Raw
+            mimeType: signatureCheck.mimeType || file.type || "application/octet-stream",
+            base64: base64Raw,
+            sizeBytes: file.size
           };
           fileNameSpan.textContent = file.name;
           fileBadge.classList.remove("hidden");
         };
+
         reader.readAsDataURL(file);
       }
     }
 
+    /*************************************************************************
+     * ۸. شمارنده تکمیل فرم و نمایش پیام‌های وضعیت
+     *************************************************************************/
     function updateCompletionCounter() {
       let count = 0;
-      if (document.getElementById("fullName").value.trim()) count++;
+      if (document.getElementById("fullName").value.trim().length >= 2) count++;
       if (document.getElementById("gender").value.trim()) count++;
       if (document.getElementById("birthDate").value.trim()) count++;
-      if (document.getElementById("phone").value.trim()) count++;
-      if (document.getElementById("whatsapp").value.trim()) count++;
-      if (document.getElementById("email").value.trim()) count++;
-      if (document.getElementById("socialMedia").value.trim()) count++;
-      if (document.getElementById("country").value.trim() && document.getElementById("city").value.trim()) count++;
-      if (document.getElementById("passportNumber").value.trim()) count++;
+      if (document.getElementById("phone").value.trim().length >= 7) count++;
+      if (document.getElementById("whatsapp").value.trim().length >= 7) count++;
+      if (document.getElementById("email").value.trim().includes("@")) count++;
+      if (document.getElementById("socialMedia").value.trim().length >= 2) count++;
+      if (document.getElementById("country").value.trim().length >= 2 && document.getElementById("city").value.trim().length >= 2) count++;
+      if (document.getElementById("passportNumber").value.trim().length >= 2) count++;
 
       const expMode = document.querySelector('input[name="experienceMode"]:checked')?.value;
       if (expMode === "internship") {
         count++;
-      } else if (expMode === "file" && uploadedFileData) {
+      } else if (expMode === "file" && uploadedFileData && uploadedFileData.base64) {
         count++;
-      } else if (expMode === "text" && document.getElementById("experienceText").value.trim()) {
+      } else if (expMode === "text" && document.getElementById("experienceText").value.trim().length >= 5) {
         count++;
       }
 
       document.getElementById("form-completion-badge").textContent = `${count} / 10`;
+    }
+
+    function hideFeedback() {
+      const box = document.getElementById("form-feedback");
+      if (box) {
+        box.classList.add("hidden");
+        box.textContent = "";
+      }
     }
 
     function showFeedback(message, type = "info") {
@@ -1968,113 +2458,170 @@
       box.textContent = message;
     }
 
+    /*************************************************************************
+     * ۹. ارسال فرم با دریافت و بررسی واقعی پاسخ JSON از بک‌اند (بدون no-cors)
+     *************************************************************************/
     async function handleFormSubmit(e) {
       e.preventDefault();
+      hideFeedback();
       const dict = I18N[currentLang] || I18N.fa;
 
-      const fullName = document.getElementById("fullName").value.trim();
-      const gender = document.getElementById("gender").value.trim();
-      const birthDate = document.getElementById("birthDate").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const whatsapp = document.getElementById("whatsapp").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const socialMedia = document.getElementById("socialMedia").value.trim();
-      const country = document.getElementById("country").value.trim();
-      const city = document.getElementById("city").value.trim();
-      const passportNumber = document.getElementById("passportNumber").value.trim();
-      const expMode = document.querySelector('input[name="experienceMode"]:checked')?.value;
-      const expText = document.getElementById("experienceText").value.trim();
+      const honeypotVal = (document.getElementById("website-hp")?.value || "").trim();
 
-      if (!fullName || !gender || !birthDate || !phone || !whatsapp || !email || !socialMedia || !country || !city || !passportNumber || !expMode) {
-        showFeedback(dict.errRequired, "error");
-        return;
-      }
+      const formValues = {
+        fullName: document.getElementById("fullName").value.trim(),
+        gender: document.getElementById("gender").value.trim(),
+        birthDate: document.getElementById("birthDate").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        whatsapp: document.getElementById("whatsapp").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        socialMedia: document.getElementById("socialMedia").value.trim(),
+        country: document.getElementById("country").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        passportNumber: document.getElementById("passportNumber").value.trim(),
+        expMode: document.querySelector('input[name="experienceMode"]:checked')?.value || "",
+        expText: document.getElementById("experienceText").value.trim()
+      };
 
-      if (expMode === "file" && !uploadedFileData) {
-        showFeedback(currentLang === "fa" ? "لطفاً فایل رزومه خود را انتخاب کنید یا گزینه نوشتن متن / کارآموزی را برگزینید." : "Please upload your resume file or select another experience option.", "error");
-        return;
-      }
-
-      if (expMode === "text" && !expText) {
-        showFeedback(currentLang === "fa" ? "لطفاً شرح سابقه کار خود را وارد نمایید." : "Please enter your work experience details.", "error");
+      // بررسی جامع فیلدها قبل از ارسال
+      const validationIssue = validateFormFieldsClient(formValues);
+      if (validationIssue) {
+        showFeedback(validationIssue.message, "error");
+        if (validationIssue.fieldId) {
+          const targetEl = document.getElementById(validationIssue.fieldId);
+          if (targetEl && typeof targetEl.focus === "function") {
+            targetEl.focus();
+          }
+        }
         return;
       }
 
       let experienceSummary = "";
-      if (expMode === "internship") {
-        experienceSummary = "سابقه کاری ندارم و مایل به کارآموزی هستم" + (expText ? ` (${expText})` : "");
-      } else if (expMode === "text") {
-        experienceSummary = expText;
+      if (formValues.expMode === "internship") {
+        experienceSummary = "سابقه کاری ندارم و مایل به کارآموزی هستم" + (formValues.expText ? ` (${formValues.expText})` : "");
+      } else if (formValues.expMode === "text") {
+        experienceSummary = formValues.expText;
       } else {
         experienceSummary = `فایل رزومه پیوست شد (${uploadedFileData.name})`;
       }
 
+      // ساخت Payload هماهنگ با ALLOWED_FORM_FIELD_KEYS در بک‌اند (بدون ارسال آی‌پی شخصی بازدیدکننده)
       const payload = {
         timestamp: new Date().toISOString(),
-        visitorIp: detectedVisitorInfo.ip,
         detectedLanguage: currentLang,
+        honeypot: honeypotVal,
         fields: {
-          fullName,
-          gender,
-          birthDate,
-          phone,
-          whatsapp,
-          email,
-          socialMedia,
-          country,
-          city,
-          location: `${country} - ${city}`,
-          passportNumber,
-          experienceMode: expMode,
-          experienceSummary,
+          fullName: formValues.fullName,
+          gender: formValues.gender,
+          birthDate: formValues.birthDate,
+          phone: formValues.phone,
+          whatsapp: formValues.whatsapp,
+          email: formValues.email,
+          socialMedia: formValues.socialMedia,
+          country: formValues.country,
+          city: formValues.city,
+          location: `${formValues.country} - ${formValues.city}`,
+          passportNumber: formValues.passportNumber,
+          experienceMode: formValues.expMode,
+          experienceSummary: experienceSummary,
           portfolioSummary: uploadedPortfolioData ? `فایل نمونه‌کار پیوست شد (${uploadedPortfolioData.name})` : "ندارد"
         },
-        fileAttachment: expMode === "file" ? uploadedFileData : null,
-        portfolioAttachment: uploadedPortfolioData
+        fileAttachment: formValues.expMode === "file" && uploadedFileData ? {
+          name: uploadedFileData.name,
+          mimeType: uploadedFileData.mimeType,
+          base64: uploadedFileData.base64
+        } : null,
+        portfolioAttachment: uploadedPortfolioData ? {
+          name: uploadedPortfolioData.name,
+          mimeType: uploadedPortfolioData.mimeType,
+          base64: uploadedPortfolioData.base64
+        } : null
       };
 
       const submitBtn = document.getElementById("submit-btn");
       const btnText = document.getElementById("t-submit-btn");
       const spinner = document.getElementById("submit-spinner");
 
+      submitBtn.dataset.submitting = "true";
       submitBtn.disabled = true;
       btnText.textContent = dict.submittingBtn;
       spinner.classList.remove("hidden");
 
       try {
-        if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
-          await fetch(GAS_WEB_APP_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(payload)
-          });
-        } else {
-          await new Promise(r => setTimeout(r, 800));
+        if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+          throw new Error(msgText("آدرس سرور بک‌اند تنظیم نشده است.", "Backend server URL is not configured."));
         }
 
+        // ارسال با حالت استاندارد CORS و Content-Type: text/plain;charset=utf-8
+        // تا پاسخ JSON واقعی از Google Apps Script خوانده و بررسی شود
+        const response = await fetch(GAS_WEB_APP_URL, {
+          method: "POST",
+          mode: "cors",
+          redirect: "follow",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            msgText(
+              `خطا در پاسخ سرور (کد وضعیت: ${response.status}). لطفاً دوباره تلاش کنید.`,
+              `Server responded with status ${response.status}. Please try again.`
+            )
+          );
+        }
+
+        let result = null;
+        try {
+          result = await response.json();
+        } catch (jsonErr) {
+          throw new Error(
+            msgText(
+              "پاسخ دریافتی از سرور معتبر نیست. لطفاً دقایقی دیگر مجدداً تلاش کنید.",
+              "Invalid response received from server. Please try again later."
+            )
+          );
+        }
+
+        // بررسی دقیق وضعیت واقعی ثبت‌نام و آپلود فایل‌ها در پاسخ بک‌اند
+        if (!result || result.ok !== true) {
+          const serverErrorMsg = (result && result.error)
+            ? result.error
+            : msgText("ثبت اطلاعات توسط سرور تایید نشد. لطفاً اطلاعات وارد شده را بررسی کنید.", "Submission was rejected by the server. Please check your inputs.");
+          showFeedback(serverErrorMsg, "error");
+          return; // اطلاعات فرم پاک نمی‌شود تا کاربر بتواند اصلاح و مجدداً ارسال کند
+        }
+
+        // تنها پس از تأیید قطعی موفقیت از سمت بک‌اند، پیام موفقیت نمایش داده و فرم ریست می‌شود
         showFeedback(dict.successMsg, "success");
         document.getElementById("recruitment-form").reset();
-        uploadedFileData = null;
-        uploadedPortfolioData = null;
-        document.getElementById("selected-file-badge").classList.add("hidden");
-        document.getElementById("selected-portfolio-badge").classList.add("hidden");
+        clearResumeFileState();
+        clearPortfolioFileState();
         document.getElementById("birthDate").value = "";
+        setCalendarMode(currentLang === "fa");
         updateCompletionCounter();
       } catch (err) {
-        showFeedback(currentLang === "fa" ? "خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید." : "Network error. Please try again.", "error");
+        const fallbackErr = msgText(
+          "خطا در ارتباط با سرور. اطلاعات شما در فرم باقی مانده است؛ لطفاً دوباره تلاش کنید.",
+          "Network error while communicating with the server. Your form data has been preserved; please try again."
+        );
+        showFeedback(err && err.message ? err.message : fallbackErr, "error");
       } finally {
-        submitBtn.disabled = false;
+        delete submitBtn.dataset.submitting;
+        updateSubmitButtonLoadingState();
         btnText.textContent = dict.submitBtn;
         spinner.classList.add("hidden");
       }
     }
 
+    /*************************************************************************
+     * ۱۰. راه‌اندازی اولیه رویدادهای صفحه
+     *************************************************************************/
     window.addEventListener("DOMContentLoaded", () => {
       initJalaliDropdowns();
       initExperienceSection();
       initPortfolioSection();
-      detectUserIpAndLanguage();
+      detectUserLanguageByRegion();
 
       document.getElementById("lang-select").addEventListener("change", (e) => {
         applyLanguage(e.target.value);
